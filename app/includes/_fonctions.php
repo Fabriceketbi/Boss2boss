@@ -1,6 +1,7 @@
 <?php
 
 require_once '_database.php';
+require_once '_config.php';
 
 function test()
 {
@@ -122,6 +123,27 @@ function addMessage(string $message): void
     $_SESSION['msg'] = $message;
 }
 
+/**
+ * Get value of error
+ *
+ * @param string $error
+ * @param array $arrayErrors
+ * @return string
+ */
+function getErrorValue(string $error, array $arrayErrors): string
+{
+    foreach ($arrayErrors as $errorValue) {
+        if ($errorValue = $error) {
+            return $error;
+        }
+    }
+}
+
+function displayErrorMsg(string $error, array $arrayErrors, $arrayDataError)
+{
+    return '<p class="msg_error">' . $arrayDataError[getErrorValue($error, $arrayErrors)] . '</p>';
+}
+
 
 function checkName(array $nameInfo): bool
 {
@@ -163,7 +185,7 @@ function getAllCategories($dbCo)
     while ($category = $query->fetch()) {
 
         echo '
-            <option value="' . $category["id_category"] . '">' . $category["name"] . '</option>
+            <option value="' . $category["id_category"] . '">' . $category["name_category"] . '</option>
         ';
     }
 }
@@ -195,23 +217,27 @@ function getAllHosts($dbCo)
 function checkInfosFormation(array $infos): bool
 {
     // if (!isset($infos['name']) || strlen($infos['name']) === 0) {
-    //     addError('name');
+    //     addError('Le champ "nom" est requis.');
     // }
-    if (!isset($infos['name_host']) || strlen($infos['name_host']) === 0) {
+
+    if (!isset($infos['name_host']) || !ctype_digit($infos['name_host'])) {
         addError('host');
     }
-    if (!isset($infos['category']) || strlen($infos['category']) === 0) {
+
+    if (!isset($infos['category']) || !ctype_digit($infos['category'])) {
         addError('category');
     }
-    if (!isset($infos['subCategory']) || strlen($infos['subCategory']) === 0) {
+
+    if (!isset($infos['subCategory']) || !ctype_digit($infos['subCategory'])) {
         addError('sub_category');
     }
-    if (!isset($infos['date1'])) {
+
+    if (!isset($infos['date1']) || strtotime($infos['date1']) === false) {
         addError('date');
     }
-    return !empty($_SESSION['errorsList']);
-}
 
+    return empty($_SESSION['errorsList']);
+}
 
 /**
  * Get all formations from category afterboss and sub category after work
@@ -222,7 +248,7 @@ function checkInfosFormation(array $infos): bool
 function getFormAbAw($dbCo)
 {
 
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 1 ORDER BY id_formation ASC LIMIT 3');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 1 ORDER BY id_formation DESC LIMIT 3');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -251,9 +277,9 @@ function getFormAbAw($dbCo)
             <div class="card_infos-dates">
                 <p>Prochaines sessions: </p>
                 <ul class="dates_lst">
-                    <li class="tag"> ' . $formation["date1_"] . '</li>
-                    <li class="tag"> ' . $formation["date2_"] . '</li>
-                    <li class="tag"> ' . $formation["date3_"] . '</li>
+                    <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date1_"] . '</li>
+                    <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date2_"] . '</li>
+                    <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date3_"] . '</li>
                 </ul>
             </div>
              <div class="card_infos-time">
@@ -278,7 +304,7 @@ function getFormAbAw($dbCo)
  */
 function getAllFormAbLa($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 3 ORDER BY id_formation ASC LIMIT 3');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 3 ORDER BY id_formation DESC LIMIT 3');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -307,9 +333,9 @@ function getAllFormAbLa($dbCo)
             <div class="card_infos-dates">
                 <p>Prochaines sessions: </p>
                 <ul class="dates_lst">
-                    <li class="tag"> ' . $formation["date1_"] . '</li>
-                    <li class="tag"> ' . $formation["date2_"] . '</li>
-                    <li class="tag"> ' . $formation["date3_"] . '</li>
+                    <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date1_"] . '</li>
+                    <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date2_"] . '</li>
+                    <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date3_"] . '</li>
                 </ul>
             </div>
              <div class="card_infos-time">
@@ -334,7 +360,7 @@ function getAllFormAbLa($dbCo)
  */
 function getLastFormAb($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 1 ORDER BY id_formation ASC LIMIT 1');
+    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 1 ORDER BY id_formation DESC LIMIT 1');
     $query->execute();
     $formation = $query->fetch();
 
@@ -373,87 +399,107 @@ function getLastFormAb($dbCo)
  */
 function getAllFormE2D5J($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 4 ORDER BY id_formation ASC LIMIT 3');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 4 ORDER BY id_formation DESC LIMIT 3');
 
     $query->execute();
     while ($formation = $query->fetch()) {
 
-    $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
-    $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
-    $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
+        $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
+        $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
+        $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
 
-    echo '
-
+        echo '
     <card class="card_formation">
-        <div class="separator--formation"></div>
-
-        <div class="card_infos-location">
-            <p>Où ?: </p>
-            <p class="tag--var-orange">' . $formation["localisation"] . '</p>
-        </div>
-        <div class="card_infos-dates">
-            <p>Prochaines sessions: </p>
-            <ul class="dates_lst">
-                <li class="tag--var-orange">' . $formation["date1_"] . '</li>
-                <li class="tag--var-orange">' . $formation["date2_"] . '</li>
-                <li class="tag--var-orange">' . $formation["date3_"] . '</li>
-            </ul>
-        </div>
-        <div class="card_infos-time">
-            <p>Horaires: </p>
-            <p class="tag--var-orange">' . $formation["time"] . '</p>
-        </div>
-        <div class="card_content-btn">
-            <button class="btn btn--inscription-orange">Je m\'incris</button>
-        </div>
-    </card>
-    ';
-}
+    <div class="separator--formation"></div>
+    <div class="card_intro">
+        <h2 class="card_formation-ttl"> ' . $formation["name"] . '
+        </h2>
+        <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
+    </div>
+    <div class="card_intro-txt">
+        <p>
+            ' . $formation["description"] . '
+        </p>
+        <p class="animator">Animé par : ' . $formation["name_host"] . '</p>
+    </div>
+    <div class="card_infos-location">
+        <p>Où ?: </p>
+        <p class="tag--var-orange">' . $formation["localisation"] . '</p>
+    </div>
+    <div class="card_infos-dates">
+        <p>Prochaines sessions: </p>
+        <ul class="dates_lst">
+            <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date1_"] . '</li>
+            <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date2_"] . '</li>
+            <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date3_"] . '</li>
+        </ul>
+    </div>
+     <div class="card_infos-time">
+        <p>Horaires: </p>
+        <p class="tag--var-orange">' . $formation["time"] . '</p>
+    </div>
+    <div class="card_content-btn">
+        <button class="btn btn--inscription-orange">Je m\'incris</button>
+    </div>
+    <!-- <div class="separator--formation"></div> -->
+</card>
+';
+    }
 }
 
 function getAllFormE2D3J($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 5 ORDER BY id_formation ASC LIMIT 3');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 5 ORDER BY id_formation DESC LIMIT 3');
 
     $query->execute();
     while ($formation = $query->fetch()) {
 
-    $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
-    $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
-    $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
+        $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
+        $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
+        $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
 
-    echo '
-
+        echo '
     <card class="card_formation">
-        <div class="separator--formation"></div>
-
-        <div class="card_infos-location">
-            <p>Où ?: </p>
-            <p class="tag--var-orange">' . $formation["localisation"] . '</p>
-        </div>
-        <div class="card_infos-dates">
-            <p>Prochaines sessions: </p>
-            <ul class="dates_lst">
-                <li class="tag--var-orange">' . $formation["date1_"] . '</li>
-                <li class="tag--var-orange">' . $formation["date2_"] . '</li>
-                <li class="tag--var-orange">' . $formation["date3_"] . '</li>
-            </ul>
-        </div>
-        <div class="card_infos-time">
-            <p>Horaires: </p>
-            <p class="tag--var-orange">' . $formation["time"] . '</p>
-        </div>
-        <div class="card_content-btn">
-            <button class="btn btn--inscription-orange">Je m\'incris</button>
-        </div>
-    </card>
-    ';
-}
+    <div class="separator--formation"></div>
+    <div class="card_intro">
+        <h2 class="card_formation-ttl"> ' . $formation["name"] . '
+        </h2>
+        <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
+    </div>
+    <div class="card_intro-txt">
+        <p>
+            ' . $formation["description"] . '
+        </p>
+        <p class="animator">Animé par : ' . $formation["name_host"] . '</p>
+    </div>
+    <div class="card_infos-location">
+        <p>Où ?: </p>
+        <p class="tag--var-orange">' . $formation["localisation"] . '</p>
+    </div>
+    <div class="card_infos-dates">
+        <p>Prochaines sessions: </p>
+        <ul class="dates_lst">
+            <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date1_"] . '</li>
+            <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date2_"] . '</li>
+            <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date3_"] . '</li>
+        </ul>
+    </div>
+     <div class="card_infos-time">
+        <p>Horaires: </p>
+        <p class="tag--var-orange">' . $formation["time"] . '</p>
+    </div>
+    <div class="card_content-btn">
+        <button class="btn btn--inscription-orange">Je m\'incris</button>
+    </div>
+    <!-- <div class="separator--formation"></div> -->
+</card>
+';
+    }
 }
 
 function getLastFormE2D($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 2 ORDER BY id_formation ASC LIMIT 1');
+    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 2 ORDER BY id_formation DESC LIMIT 1');
     $query->execute();
     $formation = $query->fetch();
 
@@ -485,16 +531,16 @@ function getLastFormE2D($dbCo)
 
 function getAllFormLppF($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 3 AND id_sub_category = 6 ORDER BY id_formation ASC LIMIT 3');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 3 AND id_sub_category = 6 ORDER BY id_formation DESC LIMIT 3');
 
     $query->execute();
     while ($formation = $query->fetch()) {
 
-    $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
-    $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
-    $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
+        $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
+        $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
+        $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
 
-    echo '
+        echo '
         <card class="card_formation">
             <div class="separator--formation"></div>
             <div class="card_intro">
@@ -515,9 +561,9 @@ function getAllFormLppF($dbCo)
             <div class="card_infos-dates">
                 <p>Prochaines sessions: </p>
                 <ul class="dates_lst">
-                    <li class="tag--var-red">' . $formation["date1_"] . '</li>
-                    <li class="tag--var-red">' . $formation["date2_"] . '</li>
-                    <li class="tag--var-red">' . $formation["date3_"] . '</li>
+                    <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '">' . $formation["date1_"] . '</li>
+                    <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '">' . $formation["date2_"] . '</li>
+                    <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '">' . $formation["date3_"] . '</li>
                 </ul>
             </div>
             <div class="card_infos-time">
@@ -530,11 +576,12 @@ function getAllFormLppF($dbCo)
             <!-- <div class="separator--formation"></div> -->
         </card>
     ';
-}
+    }
 }
 
-function getLastFormLppF($dbCo) {
-    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 3 ORDER BY id_formation ASC LIMIT 1');
+function getLastFormLppF($dbCo)
+{
+    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 3 ORDER BY id_formation DESC LIMIT 1');
     $query->execute();
     $formation = $query->fetch();
 
@@ -575,7 +622,7 @@ function getAllForm($dbCo)
 
     while ($formation = $query->fetch()) {
 
-        $dataFormation [] = $formation;
+        $dataFormation[] = $formation;
 
         $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
         $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
@@ -604,9 +651,9 @@ function getAllForm($dbCo)
                 <div class="card_infos-dates">
                     <p>Prochaines sessions: </p>
                     <ul class="dates_lst">
-                        <li class="tag"> ' . $formation["date1_"] . '</li>
-                        <li class="tag"> ' . $formation["date2_"] . '</li>
-                        <li class="tag"> ' . $formation["date3_"] . '</li>
+                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date1_"] . '</li>
+                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date2_"] . '</li>
+                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date3_"] . '</li>
                     </ul>
                 </div>
                  <div class="card_infos-time">
@@ -614,10 +661,10 @@ function getAllForm($dbCo)
                     <p class="tag">' . $formation["time"] . '</p>
                 </div>
                 <div class="card_content-btn">
-                    <form class="form_recap-form" action="actions.php" method="post">
-                    <button class="btn btn--inscription-purple" type="input" name="action" value="eddit-formation">modifier
-                    </button>
-                    <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
+                <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-purple" type="input" name="action" value="edit-formation">modifier
+                </button></a>
+                <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
+                <form class="form_recap-form" action="actions.php" method="post">
 
                     <button class="btn btn--inscription-purple" type="input" name="action" value="delete-formation">supprimer</button>
                     <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
@@ -627,7 +674,8 @@ function getAllForm($dbCo)
                 <!-- <div class="separator--formation"></div> -->
             </card>
             ';
-        }if ($formation["id_category"] === 2) {
+        }
+        if ($formation["id_category"] === 2) {
             echo '
                 <card class="card_formation--admin">
     
@@ -649,9 +697,9 @@ function getAllForm($dbCo)
                 <div class="card_infos-dates">
                     <p>Prochaines sessions: </p>
                     <ul class="dates_lst">
-                        <li class="tag--var-orange"> ' . $formation["date1_"] . '</li>
-                        <li class="tag--var-orange"> ' . $formation["date2_"] . '</li>
-                        <li class="tag--var-orange"> ' . $formation["date3_"] . '</li>
+                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date1_"] . '</li>
+                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date2_"] . '</li>
+                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date3_"] . '</li>
                     </ul>
                 </div>
                  <div class="card_infos-time">
@@ -659,10 +707,10 @@ function getAllForm($dbCo)
                     <p class="tag--var-orange">' . $formation["time"] . '</p>
                 </div>
                 <div class="card_content-btn">
-                    <form class="form_recap-form" action="actions.php" method="post">
-                    <button class="btn btn--inscription-orange" type="input" name="action" value="eddit-formation">modifier
-                    </button>
-                    <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
+                <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-orange" type="input" name="action" value="edit-formation">modifier
+                </button></a>
+                <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
+                <form class="form_recap-form" action="actions.php" method="post">
 
                     <button class="btn btn--inscription-orange" type="input" name="action" value="delete-formation">supprimer</button>
                     <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
@@ -671,7 +719,8 @@ function getAllForm($dbCo)
                 </div>
             </card>
             ';
-        }if ($formation["id_category"] === 3) {
+        }
+        if ($formation["id_category"] === 3) {
             echo '
                 <card class="card_formation--admin">
     
@@ -693,9 +742,9 @@ function getAllForm($dbCo)
                 <div class="card_infos-dates">
                     <p>Prochaines sessions: </p>
                     <ul class="dates_lst">
-                        <li class="tag--var-red"> ' . $formation["date1_"] . '</li>
-                        <li class="tag--var-red"> ' . $formation["date2_"] . '</li>
-                        <li class="tag--var-red"> ' . $formation["date3_"] . '</li>
+                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '"> ' . $formation["date1_"] . '</li>
+                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '"> ' . $formation["date2_"] . '</li>
+                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '"> ' . $formation["date3_"] . '</li>
                     </ul>
                 </div>
                  <div class="card_infos-time">
@@ -705,7 +754,7 @@ function getAllForm($dbCo)
                 <div class="card_content-btn">
                 <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-red" type="input" name="action" value="edit-formation">modifier
                 </button></a>
-                <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
+                <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
                 <form class="form_recap-form" action="actions.php" method="post">
 
                     <button class="btn btn--inscription-red" type="input" name="action" value="delete-formation">supprimer</button>
@@ -719,19 +768,20 @@ function getAllForm($dbCo)
     }
 }
 
-function editFormation($dbCo) {
-    $query = $dbCo->prepare('SELECT *, category.name AS category_name FROM formation JOIN sub_category USING (id_sub_category) JOIN category USING (id_category) WHERE id_formation = :id ');
+function editFormation($dbCo, $id, $errors)
+{
+    $query = $dbCo->prepare('SELECT * FROM formation JOIN sub_category USING (id_sub_category) JOIN category USING (id_category) JOIN host USING (id_host) WHERE id_formation = :id ');
 
-    $isQueryOk = $query->execute([ 
-        'id' => htmlspecialchars($_REQUEST['id']),
+    $isQueryOk = $query->execute([
+        'id' => htmlspecialchars($id),
     ]);
-    
+
     if ($isQueryOk) {
         $formation = $query->fetch();
 
-        var_dump($formation);
-        echo'
+        echo '
         <form id="" class="form_formation" action="../actions.php" method="post">
+
 
                     <label for="inputName" class="">Nom formation</label>
                     <input type="text" name="name" class="input" value="' . $formation["name"] . '" id="inputName" aria-describedby="">
@@ -744,41 +794,65 @@ function editFormation($dbCo) {
                     <textarea type="textearea" name="description" class="input-txt" " id="inputDescription" aria-describedby="" rows="5" cols="33">' . $formation["description"] . '</textarea>
 
 
-                    <label for="intervenant-select">intervenant</label>
+                    <label class="edit_label" for="intervenant-select">Ancien intervenant : '. $formation["name_host"] .'</label>
 
                     <select class="input" name="name_host" id="">
                         <option value="">Choisir un intervenant</option>';
-                         echo '' . getAllHosts($dbCo) . '';
-                    echo '</select>
+                    echo '' . getAllHosts($dbCo) . '';
+                    echo '</select>';
+                    
 
+                    if (isset($_SESSION['errorsList']) && in_array('edit-host_ko', $_SESSION['errorsList'])) {
 
-                    <label for="category-select">catégorie</label>
+                    echo
+                    displayErrorMsg('edit-host_ko', $_SESSION['errorsList'], $errors);
+
+                    }
+
+                    echo '
+                    <label class="edit_label" for="category-select">Ancienne catégorie : '. $formation["name_category"].'</label>
 
                     <select class="input" name="category" id="">
                         <option value="">Nom de la catégorie</option>';
-                        echo '' . getAllCategories($dbCo) .'';
-                    echo '</select>
+                    echo '' . getAllCategories($dbCo) . '';
+                    echo '</select>';
+                    
 
+                    if (isset($_SESSION['errorsList']) && in_array('edit-category_ko', $_SESSION['errorsList'])) {
 
-                    <label for="">sous-catégorie</label>
+                    echo
+                    displayErrorMsg('edit-category_ko', $_SESSION['errorsList'], $errors);
+
+                    }
+
+                    echo '
+                    <label class="edit_label" for="">Ancienne sous-catégorie : '. $formation["name_subcat"].'</label>
 
                     <select class="input" name="subCategory" id="">
                         <option value="">Choisir une sous-catégorie</option>';
-                       echo '' . getAllSubCategorie($dbCo) . '';
-                    echo '</select>
+                    echo '' . getAllSubCategorie($dbCo) . '';
+                    echo '</select>';
+                    
 
+                    if (isset($_SESSION['errorsList']) && in_array('edit-subCategory_ko', $_SESSION['errorsList'])) {
 
+                    echo
+                    displayErrorMsg('edit-subCategory_ko', $_SESSION['errorsList'], $errors);
+
+                    }
+
+                    echo '
                     <label for="inputLocalisation" class="">Localisation</label>
                     <input type="text" name="localisation" class="input" value="' . $formation["localisation"] . '" id="inputLocalisation" aria-describedby="">
 
 
-                    <label for="inputDate" class="">Date 1</label>
+                    <label for="inputDate" class="edit_label">Ancienne date : '. ((date('d/m/Y', strtotime($formation["date1_"])) === '01/01/1970') ? 'aucune date' : date('d/m/Y', strtotime($formation["date1_"]))) .'</label>
                     <input type="date" name="date1" class="input" id="inputDate" aria-describedby="">
 
-                    <label for="inputDate2" class="">Date 2</label>
+                    <label for="inputDate2" class="edit_label">Ancienne date : '. ((date('d/m/Y', strtotime($formation["date2_"])) === '01/01/1970') ? 'aucune date' : date('d/m/Y', strtotime($formation["date2_"]))) .'</label>
                     <input type="date" name="date2" class="input" id="inputDate2" aria-describedby="">
 
-                    <label for="inputDate3" class="">Date 3</label>
+                    <label for="inputDate3" class="edit_label">Ancienne date : '. ((date('d/m/Y', strtotime($formation["date3_"])) === '01/01/1970') ? 'aucune date' : date('d/m/Y', strtotime($formation["date3_"]))) .'</label>
                     <input type="date" name="date3" class="input" id="inputDate3" aria-describedby="">
 
                     <label for="inputTime" class="">Durée</label>
@@ -792,17 +866,117 @@ function editFormation($dbCo) {
                         <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
                     </div>
                 </form>';
-
+                unset($_SESSION['errorsList']);
     } else {
         addError('edit-formation_ko');
         redirectTo('_admin.php');
-        unset($_SESSION['errorsList']);
+    }
+}
+
+
+/**
+ * Check data for update
+ *
+ * @param array $updateData
+ * @return boolean
+ */
+function checkUpdateFormation (array $infos): bool
+{
+    if ((!strlen($infos['name_host']) === 0) || !ctype_digit($infos['name_host'])) {
+        addError('edit-host_ko');
     }
 
-    // $query->execute();
-    // $formation = $query->fetch();
+    if ((!strlen($infos['category']) === 0) || !ctype_digit($infos['category'])) {
+        addError('edit-category_ko');
+    }
 
-    // $formation["date1_"] = date('d/m/Y', strtotime($formation["date1_"]));
-    // $formation["date2_"] = date('d/m/Y', strtotime($formation["date2_"]));
-    // $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
+    if ((!strlen($infos['subCategory']) === 0) || !ctype_digit($infos['subCategory'])) {
+        addError('edit-subCategory_ko');
+    }
+
+    return (empty($_SESSION['errorsList']));
+}
+
+/**
+ * Check for connexion data format
+ *
+ * @param array $connexionData An array containing account data
+ * @return boolean Is there errors in account data ?
+ */
+function checkConnexionInfo(array $connexionData): bool
+{
+
+    if (!isset($connexionData['adminName']) || strlen($connexionData['adminName']) === 0) {
+        addError('connexion_nameAdmin');
+    }
+
+    if (strlen($connexionData['adminName']) > 10) {
+        addError('connexion_nameAdmin_size');
+    }
+
+    if (empty($connexionData['password'])) {
+        addError('connexion_password');
+    }
+
+    if (strlen($connexionData['password']) > 10) {
+        addError('connexion_password_size');
+    }
+
+    return empty($_SESSION['errorsList']);
+}
+
+/**
+ * connected to account
+ *
+ * @param PDO $dbCo
+ * @return void
+ */
+function connectedMyAccount(PDO $dbCo)
+{
+    try {
+        $query = $dbCo->prepare("SELECT admin_name, id_admin, password FROM admin WHERE admin_name = :admin_name");
+
+        $query->execute([
+            'admin_name' => htmlspecialchars($_REQUEST['adminName']),
+
+        ]);
+
+        while ($admin = $query->fetch()) {
+
+            if (password_verify($_REQUEST['password'], $admin['password'])) {
+                $_SESSION["id_admin"] = $admin["id_admin"];
+                $_SESSION["admin_name"] = $admin["admin_name"];
+                redirectTo('_admin.php');
+            } else {
+                addError('error_password');
+                redirectTo('_connexion.php');
+            }
+        }
+    } catch (Exception $e) {
+        addError('error_connexion');
+    }
+}
+
+/**
+ * Check for account data format
+ *
+ * @param array $accountData An array containing account data
+ * @return boolean Is there errors in account data ?
+ */
+function checkAdminInfo(array $adminData): bool
+{
+    if (!isset($adminData['nameAdmin']) || strlen($adminData['nameAdmin']) === 0) {
+        addError('create_nameAdmin');
+    }
+
+    if (strlen($adminData['nameAdmin']) > 50) {
+        addError('nameAdmin_size');
+    }
+
+    if (!isset($adminData['password']) || strlen($adminData['password']) === 0) {
+        addError('password');
+    }
+
+
+    return empty($_SESSION['errorsList']);
 }
