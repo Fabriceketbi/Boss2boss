@@ -1,10 +1,9 @@
 <?php
 include './includes/_fonctions.php';
 require_once 'includes/_config.php';
-// testCo($dbCo);
+
 session_start();
 generateToken();
-// var_dump($_SESSION['errorsList']);
 
 
 if (isset($_REQUEST['id'])) {

@@ -8,13 +8,12 @@
         </div>
         <div class="footer_content_links">
             <ul class="footer_lst-links">
-                <li class="footer_item"><a class="footer_link" href="">Alliance Consultants (c)</a></li>
-                <li class="footer_item"><a class="footer_link" href="">Mentions légales</a></li>
+                <li class="footer_item"><a class="footer_link" href="_mentions-legales.php">Mentions légales</a></li>
+                <li class="footer_item"><a class="footer_link" href="_reglement-interireur.php">Règlement intérieur</a></li>
             </ul>
             <ul class="footer_lst-links">  
-                <li class="footer_item"><a class="footer_link" href="">Règlement intérieur</a></li>
-                <li class="footer_item"><a class="footer_link" href="">CGU</a></li>
-                <li class="footer_item"><a class="footer_link" href="">RGPD</a></li>
+                <li class="footer_item"><a class="footer_link" href="_cgu.php">CGU</a></li>
+                <li class="footer_item"><a class="footer_link" href="_rgpd.php">RGPD</a></li>
                 <li class="footer_item"><a class="footer_link" href="">Contact</a></li>
             </ul>
         </div>

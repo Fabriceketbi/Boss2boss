@@ -6,6 +6,7 @@ include './includes/_config.php';
 session_start();
 generateToken();
 
+$csrfToken = $_SESSION['token'];
 
 if (!isset($_SESSION["id_admin"])) {
     redirectTo('_connexion.php');
@@ -127,6 +128,17 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputLocalisation" class="">Localisation</label>
                     <input type="text" name="localisation" class="input" id="inputLocalisation" aria-describedby="">
 
+                    <label for="inputParticipant" class="">Nombre maximum de participant</label>
+                    <input type="text" name="participants" class="input" id="inputParticipant" aria-describedby="">
+
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('nb_participants', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('nb_participants', $_SESSION['errorsList'], $errors);
+                            unset($_SESSION['errorsList']);
+                        }
+
+                    ?>
 
                     <label for="inputDate" class="">Date 1</label>
                     <input type="date" name="date1" class="input" id="inputDate" aria-describedby="">
@@ -140,10 +152,22 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputTime" class="">Durée</label>
                     <input type="text" name="time" class="input" id="inputTime" aria-describedby="">
 
+                    <label for="inputPrice" class="">Prix</label>
+                    <input type="text" name="price" class="input" id="inputPrice" aria-describedby="">
+
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('price', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('price', $_SESSION['errorsList'], $errors);
+                            unset($_SESSION['errorsList']);
+                        }
+
+                    ?>
+
 
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
-                        <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                        <input id="token" type="hidden" name="token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                         <input type="hidden" name="action" value="create-formation">
                     </div>
                 </form>
@@ -156,6 +180,15 @@ if (!isset($_SESSION["id_admin"])) {
 
                     <label for="inputName" class="">Nom de l'intervenant</label>
                     <input type="text" name="name" class="input" id="inputName" aria-describedby="">
+
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('name_host', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('name_host', $_SESSION['errorsList'], $errors);
+                            unset($_SESSION['errorsList']);
+                        }
+
+                    ?>
 
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
@@ -173,6 +206,15 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputName" class="">Nom de la catégorie</label>
                     <input type="text" name="name" class="input" id="inputName" aria-describedby="">
 
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('name_category', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('name_category', $_SESSION['errorsList'], $errors);
+                            unset($_SESSION['errorsList']);
+                        }
+
+                    ?>
+
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
@@ -188,10 +230,20 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputName" class="">Nom de la sous-catégorie</label>
                     <input type="text" name="name" class="input" id="inputName" aria-describedby="">
 
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
+                            unset($_SESSION['errorsList']);
+                        }
+
+                    ?>
+
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="add-sub-category">
+                        
                     </div>
                 </form>
 
@@ -203,8 +255,25 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputNameAdmin" class="">Nom</label>
                     <input type="text" name="nameAdmin" class="input" id="inputNameAdmin" aria-describedby="">
 
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('create_nameAdmin', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('create_nameAdmin', $_SESSION['errorsList'], $errors);
+                        }
+
+                    ?>
+
                     <label for="inputPassword" class="">Mot de passe</label>
                     <input type="password" name="password" class="input" id="inputPassword" aria-describedby="">
+
+                    <?
+                        if (isset($_SESSION['errorsList']) && in_array('password', $_SESSION['errorsList'])) {
+                            echo
+                            displayErrorMsg('password', $_SESSION['errorsList'], $errors);
+                            unset($_SESSION['errorsList']);
+                        }
+
+                    ?>
 
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">

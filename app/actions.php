@@ -4,18 +4,21 @@ session_start();
 require_once 'includes/_config.php';
 require_once 'includes/_fonctions.php';
 require_once 'includes/_database.php';
-
+// var_dump($_SESSION['errorsList']);
+// var_dump($_SESSION['token']);
+// var_dump($_REQUEST);
+// unset($_SESSION['errorsList']);
 
 preventCSRF();
 
 if (!empty($_REQUEST)) {
 
     if ($_REQUEST['action'] === 'add-sub-category' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (checkName($_REQUEST)) {
+        if (checkNameSubCategory($_REQUEST)) {
             redirectTo('_admin.php');
         } else {
 
-            $insert = $dbCo->prepare("INSERT INTO `sub_category`(`name`)
+            $insert = $dbCo->prepare("INSERT INTO `sub_category`(`name_subcat`)
             VALUES (:name);");
 
             $isInsertOk = $insert->execute([
@@ -33,11 +36,12 @@ if (!empty($_REQUEST)) {
             }
         }
     } else if ($_REQUEST['action'] === 'add-category' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        if (checkName($_REQUEST)) {
+        
+        if (checkNameCategory($_REQUEST)) {
             redirectTo('_admin.php');
+            
         } else {
-            $insert = $dbCo->prepare("INSERT INTO `category`(`name`) VALUES (:name);");
+            $insert = $dbCo->prepare("INSERT INTO `category`(`name_category`) VALUES (:name);");
             $isInsertOk = $insert->execute([
 
                 'name' => htmlspecialchars($_REQUEST['name']),
@@ -51,8 +55,9 @@ if (!empty($_REQUEST)) {
                 unset($_SESSION['errorsList']);
             }
         }
+
     } else if ($_REQUEST['action'] === 'add-intervenant' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (!checkName($_REQUEST)) {
+        if (checkNameHost($_REQUEST)) {
             redirectTo('_admin.php');
         } else {
             $insert = $dbCo->prepare("INSERT INTO `host`(`name_host`) VALUES (:name_host);");
@@ -70,12 +75,11 @@ if (!empty($_REQUEST)) {
         }
     } else if ($_REQUEST['action'] === 'create-formation' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        if (!checkInfosFormation($_REQUEST)) {
+        if (!checkInfosFormation($_REQUEST)) {  
             redirectTo('_admin.php');
-            // var_dump($_REQUEST);    
         } else {
-            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`) VALUES (:name, :subtitle, :description, :date1, :date2, :date3, :time,
-           :localisation, :id_sub_category, :id_category, :id_host);");
+            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `nb_participants`) VALUES (:name, :subtitle, :description, :date1, :date2, :date3, :time,
+           :localisation, :id_sub_category, :id_category, :id_host, :price, :nb_participants);");
 
             $isInsertOk = $insert->execute([
                 'name' => htmlspecialchars($_REQUEST['name']),
@@ -89,6 +93,8 @@ if (!empty($_REQUEST)) {
                 'id_sub_category' => intval($_REQUEST['subCategory']),
                 'id_category' => intval($_REQUEST['category']),
                 'id_host' => intval($_REQUEST['name_host']),
+                'price' => round($_REQUEST['price'], 2),
+                'nb_participants' => intval($_REQUEST['participants']),
             ]);
 
 
@@ -167,24 +173,50 @@ if (!empty($_REQUEST)) {
     }
 
 
-    if ($_REQUEST['action'] === 'create-admin' && $_SERVER['REQUEST_METHOD'] === 'POST' && (checkAdminInfo($_REQUEST))) {
-        $insert = $dbCo->prepare("INSERT INTO `admin`(`admin_name`, `password`)
-        VALUES (:admin_name, :password);");
+    if ($_REQUEST['action'] === 'create-admin' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
-
-        $isInsertOk = $insert->execute([
-
-            'admin_name' => htmlspecialchars($_REQUEST['nameAdmin']),
-            'password' => password_hash($_REQUEST['password'], PASSWORD_BCRYPT)
-        ]);
-
-        if ($isInsertOk) {
-            addMessage('create-admin_ok');
+        if (checkAdminInfo($_REQUEST)) {  
             redirectTo('_admin.php');
-        } else {
-            addError('create-admin_ko');
-            redirectTo('_admin.php');
-            unset($_SESSION['errorsList']);
+        }
+        else{
+
+            $insert = $dbCo->prepare("INSERT INTO `admin`(`admin_name`, `password`)
+            VALUES (:admin_name, :password);");
+    
+    
+            $isInsertOk = $insert->execute([
+    
+                'admin_name' => htmlspecialchars($_REQUEST['nameAdmin']),
+                'password' => password_hash($_REQUEST['password'], PASSWORD_BCRYPT)
+            ]);
+    
+            if ($isInsertOk) {
+                addMessage('create-admin_ok');
+                redirectTo('_admin.php');
+            } else {
+                addError('create-admin_ko');
+                redirectTo('_admin.php');
+                unset($_SESSION['errorsList']);
+            }
+        }
+
+    }if ($_REQUEST['action'] === 'post_form' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        // var_dump($_REQUEST);
+        if (!checkInfosMail($_REQUEST)) {
+            addError('echec_inscription');
+            redirectTo('pages/_afterBoss.php');
+        }
+        else {
+            $to = "thomasdesse.pro@gmail.com";
+            $subject = "Test d'e-mail";
+            $message = "Ceci est un test d'envoi d'e-mail avec la fonction mail() en PHP.";
+            $headers = "From: webmaster@votredomaine.com";
+
+            mail($to, $subject, $message, $headers);
+            redirectTo('pages/_afterBoss.php');
         }
     }
 }
+
+
+

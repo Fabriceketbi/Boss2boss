@@ -19,12 +19,12 @@ include '../includes/_database.php';
 <body>
     <header>
         <div class="header_nav--desktop">
-            <a href="/"><img class="nav_logo" src="../assets/img/boss2boss_white.png" alt=""></a>
+            <a href="/"><img class="nav_logo" src="../assets/img/b2b.png" alt=""></a>
             <nav>
                 <ul class="nav_lst">
-                    <li><a class="btn btn--header-white--purple" href="../pages/_afterboss.php">Afterboss</a></li>
-                    <li><a class="btn btn--header-white--orange" href="../pages/_entrepreneur2demain.php">Entrepreneurs2demain</a></li>
-                    <li><a class="btn btn--header-white--red" href="../pages/_lespepes.php">Les Pépés Flingueurs</a></li>
+                    <li><a class="btn btn--header-white--purple" href="../pages/_afterboss.php">afterboss</a></li>
+                    <li><a class="btn btn--header-white--orange" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
+                    <li><a class="btn btn--header-white--red active_ppfl" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                 </ul>
                 
             </nav>
@@ -32,22 +32,22 @@ include '../includes/_database.php';
         </div>
         <div class="header_nav--mobile">
             <div >
-                <a href="/"><img class="nav_logo" src="../assets/img/b2b.png" alt=""></a>
+                <a href="/"><img class="nav_logo-mobile" src="../assets/img/b2b.png" alt=""></a>
             </div>
             <div class="nav_menu_berger"><img src="../assets/svg/menu_berger.svg" alt="">
             </div>
         </div>
-        <div class="nav_menu_berger-open">
+        <div class="hidden nav_menu_berger-open">
             <ul class="nav_menu_berger-open--lst">
-                <li><a class="menu_berger-itm" href="../pages/_afterboss.php">Afterboss</a></li>
-                <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">Entrepreneurs2demain</a></li>
-                <li><a class="menu_berger-itm" href="../pages/_lespepes.php">Les Pépés Flingueurs</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_afterboss.php">afterboss</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                 <li><a class="menu_berger-itm" type="mail" href="mailto:fpineda@fpineda.co">Contact</a></li>
             </ul>
         </div>   
     </header>
     <main class="main--lespepes">
-    <section class="section_card--var order1">
+    <section class="section_card--var-lespepes">
             <div class="presentation">
                 <img class="logo_lespepesflingueurs" src="../assets/img/lespepesflingueursblack.png" alt="">
             
@@ -70,50 +70,25 @@ include '../includes/_database.php';
 
             </section>
 
-            <p class="txt_short--var">LA PROCHAINE SESSION</p>
+            <!-- <p class="txt_short--var">LA PROCHAINE SESSION</p> -->
         </div>
     </section>
-    <div class="infos_offers--var-red order2">
-        <!-- <card class="card card--var-red">
-            <h2 class="card_title">CONFÉRENCES</h2>
-            <div>
-                <p class="card_txt--var-red">Quoi ma gueule ? 
-                </p>
-                <p class="card_txt--var-red">(Personal branding)</p>
-            </div>
-                <p class="card_subtitle">PROCHAINE SESSION</p>
-                <div class="content_next_session">
-                    <div class="infos_next_session">
-                        <ul class="infos_next_session--lst">
-                            <l1>07/11/24 </l1>
-                            <l1>18h-19h30h</l1>
-                            <l1>Caen</l1>
-                        </ul>
-                    </div>
-                    <button class="btn btn--var-white-red">Je m'inscris
-                        </button>
-                    </div>
-                </card> -->
-                <?= getLastFormLppF($dbCo) ?>
-            </div>
-    <div class="content_offers order3">
-        <h2 class="card_title">NOS OFFRES</h2>
-        <div class="content_offers_btn">
-            <button class="btn btn--var-red">CONFÉRENCES</button>
-        </div>
+    <div class="infos_offers--var-red">
+            <?= getFormLesPepesByDate($dbCo) ?>
     </div>
-        </card>
+    
+    </div>
+    <div id="conférences" class="banner_offers--var-red">
+        <h2 class="banner_title">CONFÉRENCES</h2>
+        <p class="banner_txt">A l’occasion d’une conférence de 90 minutes animée en duo, des sujets-clefs d’actualité sont abordés : image de soi, management multigénérationnelle, changements sociétaux… Dire, réfléchir et rire (souvent de soi) sont au programme.</p>
     </div>
     <section class="section_formations">
-        <div class="banner_offers--var-red">
-            <h2 class="banner_title">CONFÉRENCES</h2>
-            <p class="banner_txt">A l’occasion d’une conférence de 90 minutes animée en duo, des sujets-clefs d’actualité sont abordés : image de soi, management multigénérationnelle, changements sociétaux… Dire, réfléchir et rire (souvent de soi) sont au programme.</p>
-        </div>
         
         <?= getAllFormLppF($dbCo) ?>
 
     </section>
     </main>
-    <?php require('_footer-var.php') ?>
+    <?php require('_footer.php') ?>
+    <script type="module" src="../js/script-lespepesflingueurs.js"></script>
 </body>
 </html>
