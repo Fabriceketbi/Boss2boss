@@ -11,6 +11,7 @@ services:
       - "8080:80"
     depends_on:
       - db
+      - maildev
     environment:
       APACHE_RUN_USER: www-data
       APACHE_RUN_GROUP: www-data
@@ -18,6 +19,8 @@ services:
       APACHE_RUN_DIR: /var/run/apache2
       APACHE_LOCK_DIR: /var/lock/apache2
       PHP_ROOT_DIR: /var/www/html
+      # Configurer MailDev comme SMTP
+      PHP_INI_SENDMAIL_PATH: "/usr/sbin/sendmail -S maildev:1025"
     working_dir: /var/www/html
 
   # Service MySQL
@@ -45,6 +48,14 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root_password
       UPLOAD_LIMIT: 10M
+
+  # Service MailDev pour les e-mails de test
+  maildev:
+    image: maildev/maildev
+    restart: always
+    ports:
+      - "1080:1080"  # Interface Web de MailDev
+      - "1025:1025"  # Port SMTP pour recevoir les e-mails
 
 volumes:
   db_data: {}

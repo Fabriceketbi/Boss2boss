@@ -25,6 +25,7 @@ include '../includes/_database.php';
                     <li><a class="btn btn--header-white--purple" href="../pages/_afterboss.php">afterboss</a></li>
                     <li><a class="btn btn--header-white--orange active_etp" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                     <li><a class="btn btn--header-white--red" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
+                    <li><a class="btn btn--header-white--green" href="../pages/_b2btv.php">B2B TV</a></li>
                 </ul>
                 
             </nav>
@@ -42,11 +43,44 @@ include '../includes/_database.php';
                 <li><a class="menu_berger-itm" href="../pages/_afterboss.php">afterboss</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_b2btv.php">B2B TV</a></li>
                 <li><a class="menu_berger-itm" type="mail" href="mailto:fpineda@fpineda.co">Contact</a></li>
             </ul>
         </div>   
     </header>
     <main class="main--afterwork">
+    <?php
+            if (isset($_SESSION['errorsList']) && in_array('echec_inscription', $_SESSION['errorsList'])) {
+
+                echo '
+                <div data-msg="" class="show-msg">
+                    <div class="content_error">
+                    <div class="content_error-cross">
+                        <img class="cross-img" src="../assets/img/close.png" alt="">
+                    </div>
+                    
+                    '.displayErrorMsg('echec_inscription', $_SESSION['errorsList'], $errors).'
+                    
+                    </div>
+                </div>';
+                }
+            if (isset($_SESSION['msg']) && in_array('inscription_ok', $_SESSION['msg'])) {
+                
+                echo '
+                <div data-msg="" class="show-msg">
+                    <div data-msg="" class="content_success">
+                    <div class="content_success-cross">
+                        <img class="cross-img" src="../assets/img/close.png" alt="">
+                    </div>
+
+                    '.displaySuccesMsg('inscription_ok', $_SESSION['msg'], $messages).'
+
+                    </div>
+                </div>';
+                
+            }
+            unset($_SESSION['msg']);
+        ?>
     <section class="section_card--var order1">
             <div class="presentation">
                 <img class="logo_entrepreneurs2demain" src="../assets/img/entrepreneurs2demainblack.png" alt="">
@@ -74,9 +108,9 @@ include '../includes/_database.php';
     <div class="content_cursus">
         <section id="cursus3j" class="section_formations">     
             
-            <?= getAllFormE2D3J ($dbCo) ?>
+            <?= getAllFormE2D3J ($dbCo, $errors) ?>
         <div id="cursus5j"></div>
-            <?= getAllFormE2D5J ($dbCo) ?>
+            <?= getAllFormE2D5J ($dbCo, $errors) ?>
         </section>
         
     </div>

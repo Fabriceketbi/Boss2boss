@@ -34,10 +34,15 @@ $errors = [
     'nb_participants' => 'Saisissez un nombre de participants, si pas de participants saisissez 0',
     'edit-participants_ko' => 'Nombre de participants non renseigné',
     'lastname_null' => 'Saisissez un nom',
+    'lastname_null--atelier' => 'Saisissez un nom',
     'lastname_size' => 'Saisissez un nom de 50 caractères maximum',
+    'lastname_size--atelier' => 'Saisissez un nom de 50 caractères maximum',
     'firstname_null' => 'Saisissez un prénom',
+    'firstname_null--atelier' => 'Saisissez un prénom',
     'firstname_size' => 'Saisissez un prénom de 50 caractères maximum',
+    'firstname_size--atelier' => 'Saisissez un prénom de 50 caractères maximum',
     'email_null' => 'Saisissez un email',
+    'email_null--atelier' => 'Saisissez un email',
     'echec_inscription' => 'Échec inscription',
 ];
 
@@ -48,4 +53,5 @@ $messages = [
     'add-intervenant_ok' => 'Intervenant ajouté',
     'add-formation_ok' => 'Formation ajoutée',
     'edit-formation_ok' => 'Formation modifiée',
+    'inscription_ok' => 'Inscription reussie',
 ];

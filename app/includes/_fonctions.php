@@ -120,7 +120,10 @@ function addError(string $errorMsg): void
  */
 function addMessage(string $message): void
 {
-    $_SESSION['msg'] = $message;
+    if (!isset($_SESSION['msg'])) {
+        $_SESSION['msg'] = [];
+    }
+    $_SESSION['msg'][] = $message;
 }
 
 /**
@@ -139,9 +142,30 @@ function getErrorValue(string $error, array $arrayErrors): string
     }
 }
 
+/**
+ * Get value of succes
+ *
+ * @param string $succes
+ * @param array $arrayMessages
+ * @return string
+ */
+function getSuccesValue(string $succes, array $arrayMessages): string
+{
+    foreach ($arrayMessages as $succesValue) {
+        if ($succesValue = $succes) {
+            return $succes;
+        }
+    }
+}
+
 function displayErrorMsg(string $error, array $arrayErrors, $arrayDataError)
 {
     return '<p class="msg_error">' . $arrayDataError[getErrorValue($error, $arrayErrors)] . '</p>';
+}
+
+function displaySuccesMsg(string $succes, array $arrayMessages, $arrayDataSucces)
+{
+    return '<p class="msg_succes">' . $arrayDataSucces[getSuccesValue($succes, $arrayMessages)] . '</p>';
 }
 
 // Tableau des jours et mois en français
@@ -355,42 +379,69 @@ function getFormAbAw($dbCo, $errors)
                 </div>
                 <div class="pop-up_content">
                     <form class="form" action="../../actions.php" method="post">
-
                         <div class="form_group">
                             <div class="form_group-input">
                                 <label for="inputLastName" class="">Nom</label>
-                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">
-                            </div>';
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
 
-                        if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
 
-                        echo
-                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
-                        }
-
-                        unset($_SESSION['errorsList']);
+                        echo '</div>';
 
                         echo'
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
-                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">
-                            </div>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
                         </div>
 
                         <label for="inputEmail" class="">Email</label>
-                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">
-
-                        <label for="inputFormationName" class="">Sujet</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
                         <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
 
-                        <div class="content_btn">
+                        <div class="content_btn-form">
                             <input type="submit" value="Valider" class="btn btn--var-green">
                             <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
                             <input type="hidden" name="action" value="post_form">
                             <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
-                        </div>
-
-                    </form>
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
                 </div>
             </div>
         </section>
@@ -405,7 +456,7 @@ function getFormAbAw($dbCo, $errors)
  * @param [type] $dbCo
  * @return void
  */
-function getAllFormAbLa($dbCo)
+function getAllFormAbLa($dbCo, $errors)
 {
     $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 3 ORDER BY id_formation DESC');
     $query->execute();
@@ -456,38 +507,76 @@ function getAllFormAbLa($dbCo)
                     <img data-close=' . $formation["id_formation"] . ' class="pop-up_close" src="../assets/img/close.png" alt="">
                 </div>
                 <div class="pop-up_content">
-                    <form class="form" action="" method="post">
-
+                    <form class="form" action="../../actions.php" method="post">
                         <div class="form_group">
                             <div class="form_group-input">
                                 <label for="inputLastName" class="">Nom</label>
-                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">
-                            </div>
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
+
+                        echo '</div>';
+
+                        echo'
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
-                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">
-                            </div>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
                         </div>
 
                         <label for="inputEmail" class="">Email</label>
-                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">
-
-                        <label for="inputFormationName" class="">Sujet</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
                         <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
 
-                        <div class="content_btn">
+                        <div class="content_btn-form">
                             <input type="submit" value="Valider" class="btn btn--var-green">
                             <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
                             <input type="hidden" name="action" value="post_form">
                             <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
-                        </div>
-
-                    </form>
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
                 </div>
             </div>
         </section>
         ';
     }
+    unset($_SESSION['errorsList']);
 }
 
 
@@ -545,7 +634,7 @@ function getLastFormAb($dbCo)
  * @param [type] $dbCo
  * @return void
  */
-function getAllFormE2D5J($dbCo)
+function getAllFormE2D5J($dbCo, $errors)
 {
     $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 4 ORDER BY id_formation DESC');
 
@@ -598,41 +687,79 @@ function getAllFormE2D5J($dbCo)
                     <img data-close=' . $formation["id_formation"] . ' class="pop-up_close" src="../assets/img/close.png" alt="">
                 </div>
                 <div class="pop-up_content">
-                    <form class="form" action="" method="post">
-
+                    <form class="form" action="../../actions.php" method="post">
                         <div class="form_group">
                             <div class="form_group-input">
                                 <label for="inputLastName" class="">Nom</label>
-                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">
-                            </div>
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
+
+                        echo '</div>';
+
+                        echo'
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
-                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">
-                            </div>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
                         </div>
 
                         <label for="inputEmail" class="">Email</label>
-                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">
-
-                        <label for="inputFormationName" class="">Sujet</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
                         <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
 
-                        <div class="content_btn">
+                        <div class="content_btn-form">
                             <input type="submit" value="Valider" class="btn btn--var-green">
                             <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
                             <input type="hidden" name="action" value="post_form">
                             <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
-                        </div>
-
-                    </form>
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
                 </div>
             </div>
         </section>
-';
+        ';
     }
+    unset($_SESSION['errorsList']);
 }
 
-function getAllFormE2D3J($dbCo)
+function getAllFormE2D3J($dbCo, $errors)
 {
     $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 5 ORDER BY id_formation DESC LIMIT 3');
 
@@ -643,7 +770,7 @@ function getAllFormE2D3J($dbCo)
         $formation["date2_"] = traductDate($formation["date2_"]);
         $formation["date3_"] = traductDate($formation["date3_"]);
 
-        echo '
+    echo '
     <card  id="formation-'.$formation["id_formation"].'" class="card_formation--orange">
     <div class="card_intro">
         <h2 class="card_formation-ttl--orange"> ' . $formation["name"] . '
@@ -679,37 +806,74 @@ function getAllFormE2D3J($dbCo)
                     <img data-close=' . $formation["id_formation"] . ' class="pop-up_close" src="../assets/img/close.png" alt="">
                 </div>
                 <div class="pop-up_content">
-                    <form class="form" action="" method="post">
-
+                    <form class="form" action="../../actions.php" method="post">
                         <div class="form_group">
                             <div class="form_group-input">
                                 <label for="inputLastName" class="">Nom</label>
-                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">
-                            </div>
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
+
+                        echo '</div>';
+
+                        echo'
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
-                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">
-                            </div>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
                         </div>
 
                         <label for="inputEmail" class="">Email</label>
-                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">
-
-                        <label for="inputFormationName" class="">Sujet</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
                         <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
 
-                        <div class="content_btn">
+                        <div class="content_btn-form">
                             <input type="submit" value="Valider" class="btn btn--var-green">
                             <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
                             <input type="hidden" name="action" value="post_form">
                             <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
-                        </div>
-
-                    </form>
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
                 </div>
             </div>
         </section>
-';
+        ';
     }
 }
 
@@ -750,7 +914,7 @@ function getLastFormE2D($dbCo)
     ';
 }
 
-function getAllFormLppF($dbCo)
+function getAllFormLppF($dbCo, $errors)
 {
     $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 3 AND id_sub_category = 6 ORDER BY id_formation DESC LIMIT 3');
 
@@ -797,38 +961,76 @@ function getAllFormLppF($dbCo)
                     <img data-close=' . $formation["id_formation"] . ' class="pop-up_close" src="../assets/img/close.png" alt="">
                 </div>
                 <div class="pop-up_content">
-                    <form class="form" action="" method="post">
-
+                    <form class="form" action="../../actions.php" method="post">
                         <div class="form_group">
                             <div class="form_group-input">
                                 <label for="inputLastName" class="">Nom</label>
-                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">
-                            </div>
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
+
+                        echo '</div>';
+
+                        echo'
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
-                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">
-                            </div>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
                         </div>
 
                         <label for="inputEmail" class="">Email</label>
-                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">
-
-                        <label for="inputFormationName" class="">Sujet</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
                         <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
 
-                        <div class="content_btn">
+                        <div class="content_btn-form">
                             <input type="submit" value="Valider" class="btn btn--var-green">
                             <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
                             <input type="hidden" name="action" value="post_form">
                             <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
-                        </div>
-
-                    </form>
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
                 </div>
             </div>
         </section>
     ';
     }
+    unset($_SESSION['errorsList']);
 }
 
 function getLastFormLppF($dbCo)

@@ -201,20 +201,54 @@ if (!empty($_REQUEST)) {
         }
 
     }if ($_REQUEST['action'] === 'post_form' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        // var_dump($_REQUEST);
+
         if (!checkInfosMail($_REQUEST)) {
+// var_dump($_REQUEST);
+            $_SESSION['id_form-select'] = $_REQUEST['id_formation'];
             addError('echec_inscription');
-            redirectTo('pages/_afterBoss.php');
+            if ($_REQUEST['id_category'] === "1") {
+                redirectTo('pages/_afterboss.php');
+            }
+            if ($_REQUEST['id_category'] === "2") {
+                redirectTo('pages/_entrepreneur2demain.php');
+            }
+            if ($_REQUEST['id_category'] === "3") {
+                redirectTo('pages/_lespepes.php');
+            }
         }
         else {
-            $to = "thomasdesse.pro@gmail.com";
-            $subject = "Test d'e-mail";
-            $message = "Ceci est un test d'envoi d'e-mail avec la fonction mail() en PHP.";
-            $headers = "From: webmaster@votredomaine.com";
 
-            mail($to, $subject, $message, $headers);
-            redirectTo('pages/_afterBoss.php');
+        $to = "inscription@boss2boss.club ";
+        $subject = "inscription";
+        $message =  htmlspecialchars($_REQUEST['lastname']) . " " . htmlspecialchars($_REQUEST['firstname']) . " souhaite s'inscrire pour la formation " . htmlspecialchars($_REQUEST['formationName']);
+        $headers = htmlspecialchars($_REQUEST['email']);
+
+        var_dump($message);
+        var_dump($headers);
+
+        $_SESSION['id_form-select'] = $_REQUEST['id_formation'];
+        // mail($to, $subject, $message, $headers);
+        addMessage('inscription_ok');  
+        if ($_REQUEST['id_category'] === "1") {
+            redirectTo('pages/_afterboss.php');
         }
+        if ($_REQUEST['id_category'] === "2") {
+            redirectTo('pages/_entrepreneur2demain.php');
+        }
+        if ($_REQUEST['id_category'] === "3") {
+            redirectTo('pages/_lespepes.php');
+        }
+            // echo ''.$message.'';
+        // if(mail($to, $subject, $message, $headers)) {
+        //     echo "E-mail envoyé avec succès.";
+        // } else {
+        //     echo "Échec de l'envoi de l'e-mail.";
+        // }
+
+            // mail($to, $subject, $message, $headers);
+            // redirectTo('pages/_afterBoss.php');
+        }
+
     }
 }
 

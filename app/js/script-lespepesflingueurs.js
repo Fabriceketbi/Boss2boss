@@ -5,9 +5,19 @@ const burgerButton = document.querySelector(".nav_menu_berger");
 const burgerMenu = document.querySelector(".nav_menu_berger-open");
 const forms = document.querySelectorAll("[data-form]");
 const btnPopUp = document.querySelectorAll("[data-btn]");
-// const popUp = document.querySelector(".section_pop-up");
 const closePopUp = document.querySelectorAll(".pop-up_close");
+const msgCross = document.querySelector(".cross-img");
+const contentMsg = document.querySelector("[data-msg]");
 
+
+if (msgCross) {
+    
+    msgCross.addEventListener("click", () => {
+        contentMsg.classList.remove("show-msg");
+        contentMsg.classList.add("hidden");
+    }
+    );
+}
 
 closePopUp.forEach((cross) => {
     cross.addEventListener("click", () => {

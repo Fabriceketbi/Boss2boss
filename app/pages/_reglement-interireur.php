@@ -17,6 +17,8 @@
                     <li><a class="btn btn--header-white--purple" href="../pages/_afterboss.php">afterboss</a></li>
                     <li><a class="btn btn--header-white--orange" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                     <li><a class="btn btn--header-white--red" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
+                    <li><a class="btn btn--header-white--green" href="../pages/_b2btv.php">B2B TV</a></li>
+                    
                 </ul>
 
             </nav>
@@ -35,6 +37,7 @@
                 <li><a class="menu_berger-itm" href="../pages/afterboss.php">afterboss</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_b2btv.php">B2B TV</a></li>
                 <li><a class="menu_berger-itm" type="mail" href="mailto:fpineda@fpineda.co">Contact</a></li>
             </ul>
         </div>
@@ -162,7 +165,7 @@
     </div>
 </main>
 <?php require('_footer.php') ?>
-<script type="module" src="../js/script-menu_burger.js"></script>
+<script type="module" src="../js/script-mentions.js"></script>
 </body>
 
 </html>
