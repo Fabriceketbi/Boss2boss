@@ -44,6 +44,8 @@ $errors = [
     'email_null' => 'Saisissez un email',
     'email_null--atelier' => 'Saisissez un email',
     'echec_inscription' => 'Échec inscription',
+    'create_video-ko' => 'Echec lors de l\'ajout de la video',
+    'insert_video-ko' => 'erreur enregistrement vidéo',
 ];
 
 $messages = [
@@ -54,4 +56,5 @@ $messages = [
     'add-formation_ok' => 'Formation ajoutée',
     'edit-formation_ok' => 'Formation modifiée',
     'inscription_ok' => 'Inscription reussie',
+    'insert_video_ok' => 'Video ajoutée',
 ];

@@ -72,7 +72,7 @@ generateToken();
                 </div>
             </div>
         
-                <h2 class="banner-ttl-b2btv">
+                <!-- <h2 class="banner-ttl-b2btv">
                     Découvre tous nos programmes
                 </h2>
 
@@ -80,12 +80,12 @@ generateToken();
                     <a class="btn btn-green" href="">Les rencontres</a>
                     <a class="btn btn-green" href="">Conjuguer au féminin</a>
                     <a class="btn btn-green" href="">Virage</a>
-                </div>
+                </div> -->
         </div>
     </header>
 
     <main>
-        <section class="au-feminin">
+        <!-- <section class="au-feminin">
             <div class="content-presentation">
 
             <figure>
@@ -100,30 +100,64 @@ generateToken();
                     Au travers d’une ballade filmée dans l’entreprise, au travers de questions portées sur “l’intime” plus que l’organisationnel, portrait de femmes entrepreneures, leurs forces et faiblesses, la place du regard des autres mais plus encore, l’équilibre entre la vie pro et la vie perso, les enfants...
                 </p>
             </div>
-                <div class="slider-items">
-                    <!-- <div class="slider-item"> -->
-                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="slider-items--af">
+                    
+                    <iframe ></iframe>
 
-                    <!-- </div> -->
+               
+                    <iframe></iframe>
 
-                    <!-- <div class="slider-item"> -->
-                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/vayDIshiVGQ?si=6m3zAnN9oZKnRc6h" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          
+                    <iframe></iframe>
 
-                    <!-- </div> -->
-
-                    <!-- <div class="slider-item"> -->
-                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/m7qlSGhSLq8?si=xBfh_jqNoy4f6sp2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-                    <!-- </div> -->
-
-                    <!-- <div class="slider-item"> -->
-                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/H9n-mc8qS1o?si=5rA-t4xc_QGiCmZB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            
+                    <iframe></iframe>
 
                 </div>
-        </section>
+        </section> -->
+        <!-- <section class="virage">
+            <div class="content-presentation">
+                <figure class="presentation-fig">
+                    <picture>
+                        <source media="(min-width: 960px)" srcset="../assets/img/img-tlt-virage-XL.png">
+                        <img src="../assets/img/img-tlt-virage-S.png" alt="">
+                    </picture>
+                    <figcaption></figcaption>
+                </figure>
+
+                <p class="presentation-txt">
+                    Dans un format interview, en situation figée, rencontre autour de la question de l’avenir professionnel, après des études, à l’heure d’une reconversion... avec toujours la même question centrale : comment être heureux.se dans ma vie professionnelles ? 
+                </p>
+            </div>
+            <div class="slider-items-virage">
+
+                <iframe class="slider-item--var" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" frameborder="0" allowfullscreen>></iframe>
+
+                <iframe class="slider-item--var" width="200" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" frameborder="0" allowfullscreen></iframe>
+
+                <iframe class="slider-item--var" width="200" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" frameborder="0" allowfullscreen></iframe>
+
+                <iframe class="slider-item--var" width="200" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" frameborder="0" allowfullscreen></iframe>
+
+                <iframe class="slider-item--var" width="200" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" frameborder="0" allowfullscreen></iframe> -->
+
+                
+                    <!-- <iframe class="slider-item" width="560" height="400" src="https://www.youtube.com/embed/62PdsOYKVpQ?si=qfdja0QJ-x87Q5nt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    
+               
+                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/vayDIshiVGQ?si=6m3zAnN9oZKnRc6h" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+          
+                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/m7qlSGhSLq8?si=xBfh_jqNoy4f6sp2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+            
+                    <iframe class="slider-item" width="560" height="315" src="https://www.youtube.com/embed/H9n-mc8qS1o?si=5rA-t4xc_QGiCmZB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+
+                <!-- </div>
+        </section> -->
         <section class="les-rencontres">
             <div class="content-presentation">
-                <figure>
+                <figure class="presentation-fig">
                     <picture>
                         <source media="(min-width: 960px)" srcset="../assets/img/img-tlt-les-rencontres-XL-var.png">
                         <img src="../assets/img/img-tlt-les-rencontres-S-var.png" alt="">
@@ -136,65 +170,12 @@ generateToken();
             </div>
 
             <div class="slider-items">
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
+      
+                <?= getVideos($dbCo); ?>
 
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                </div>
-        </section>
-        <section class="virage">
-            <div class="content-presentation">
-                <figure>
-                    <picture>
-                        <source media="(min-width: 960px)" srcset="../assets/img/img-tlt-virage-XL.png">
-                        <img src="../assets/img/img-tlt-virage-S.png" alt="">
-                    </picture>
-                    <figcaption></figcaption>
-                </figure>
-
-                <p class="presentation-txt">
-                    Dans un format interview, en situation figée, rencontre autour de la question de l’avenir professionnel, après des études, à l’heure d’une reconversion... avec toujours la même question centrale : comment être heureux.se dans ma vie professionnelles ? 
-                </p>
             </div>
-                <div class="slider-items">
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                    <div class="slider-item">
-                        <iframe src="https://youtube.com/embed/AOS6gr9NkCo" frameborder="0" s></iframe>
-                        <h3 class="slider-item-ttl">Titre vidéo</h3>
-                    </div>
-
-                </div>
         </section>
+        
     </main>
 
     <?php require('_footer.php') ?>

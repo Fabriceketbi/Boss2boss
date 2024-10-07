@@ -238,17 +238,31 @@ if (!empty($_REQUEST)) {
         if ($_REQUEST['id_category'] === "3") {
             redirectTo('pages/_lespepes.php');
         }
-            // echo ''.$message.'';
-        // if(mail($to, $subject, $message, $headers)) {
-        //     echo "E-mail envoyé avec succès.";
-        // } else {
-        //     echo "Échec de l'envoi de l'e-mail.";
-        // }
 
-            // mail($to, $subject, $message, $headers);
-            // redirectTo('pages/_afterBoss.php');
         }
 
+    }if ($_REQUEST['action'] === 'add-video' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        if (checkLinkVideo($_REQUEST)) {
+            redirectTo('_admin.php');
+            // var_dump($_REQUEST);
+        } else {
+            $insert = $dbCo->prepare("INSERT INTO `video`(`link`)
+            VALUES (:link);");
+
+            $isInsertOk = $insert->execute([
+
+                'link' => htmlspecialchars($_REQUEST['link']),
+            ]);
+
+            if ($isInsertOk) {
+                addMessage('add_video-ok');
+                redirectTo('_admin.php');
+            } else {
+                addError('add_video-ko');
+                unset($_SESSION['errorsList']);
+            }
+        };
     }
 }
 

@@ -248,6 +248,36 @@ if (!isset($_SESSION["id_admin"])) {
                 </form>
 
                 <div class="separator--form"></div>
+
+                <h2>Formulaire d'ajout de vidéo</h2>
+                <form id="" class="form_formation" action="../actions.php" method="post">
+
+                    <label for="inputLink" class="">Lien de la vidéo</label>
+                    <input type="text" name="link" class="input" id="inputLink" aria-describedby="">
+
+                    <?
+                        // if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
+                        //     echo
+                        //     displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
+                        //     unset($_SESSION['errorsList']);
+                        // }
+
+                    ?>
+
+                    <div class="content_btn">
+                        <input type="submit" value="Valider" class="btn btn--var-green">
+                        <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                        <input type="hidden" name="action" value="add-video">
+                        
+                    </div>
+                </form>
+
+
+
+
+
+                <div class="separator--form"></div>
+
                 <h2>Formulaire de création de compte admin</h2>
 
                 <form id="" class="form_formation" action="../actions.php" method="post">
@@ -288,7 +318,14 @@ if (!isset($_SESSION["id_admin"])) {
 
             <?= getAllForm($dbCo) ?>
 
+        </section>
 
+        <section class="section_recap-videos">
+
+            <?= 
+            // getAllVideos($dbCo) 
+            getAllVideos($dbCo);
+            ?>
         </section>
     </main>
 

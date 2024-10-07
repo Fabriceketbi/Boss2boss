@@ -1635,3 +1635,58 @@ function getFormLesPepesByDate (PDO $dbCo) {
             </card>
     ';
 }
+
+/**
+ * Check for add link video
+ *
+ * @param array $videoData An array containing video data
+ * @return boolean Is there errors in video data ?
+ */
+function checkLinkVideo(array $videoData): bool
+{
+    if (!isset($videoData['link'])) {
+        addError('create_video-ko');
+    }
+
+    return (!empty($_SESSION['errorsList']));
+}
+
+function getVideos (PDO $dbCo) {
+
+    $query = $dbCo->query('SELECT * FROM video ORDER BY id_video DESC limit 10');
+
+    $query->execute();
+
+    $allVideos = $query->fetchAll();
+    foreach ($allVideos as $key => $video) {
+
+        echo '
+        <div class="content_ifram">
+        <iframe class="slider-item" width="560" height="400" src="' . $video['link'] . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        ';
+    }
+}
+
+function getAllVideos (PDO $dbCo) {
+
+    $query = $dbCo->query('SELECT * FROM video');
+
+    $query->execute();
+
+    $allVideos = $query->fetchAll();
+    foreach ($allVideos as $key => $video) {
+
+        echo '
+        <div class="content_ifram">
+        <iframe class="slider-item" width="560" height="400" src="' . $video['link'] . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div class="content_ifram-btn">
+            <form>
+                <button class="btn btn--sup-vid-red" type="input" name="action" value="delete-video">supprimer la vidéo</button>
+            </form>
+        </div>
+        </div>
+        ';
+    }
+
+}

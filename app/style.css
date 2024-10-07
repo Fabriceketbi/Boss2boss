@@ -2265,8 +2265,7 @@ button {
     }
 }
 
-.au-feminin, 
-.virage {
+.au-feminin {
     background-color: var(--grenn);
     display: flex;
     flex-direction: column;
@@ -2290,6 +2289,10 @@ button {
     }
 }
 
+.presentation-fig {
+    text-align: left;
+}
+
 .presentation-txt {
     text-align: left;
 }
@@ -2300,11 +2303,6 @@ button {
     }
 }
 
-
-.slider-container {
-    
-}
-
 .slider-items {
     width: 100%;
     display: flex;
@@ -2313,13 +2311,16 @@ button {
     scroll-snap-type: x mandatory;
 }
 
+
+
 @media screen and (min-width: 960px) {
     .slider-items {
         overflow-x: auto;
         scrollbar-width: none;
         scroll-behavior: smooth;
         padding-top: 7rem;
-        padding-bottom: 1.5rem;
+        padding-bottom: 7rem;
+        scroll-behavior: smooth;
     }
 
     .slider-items:active {
@@ -2332,28 +2333,31 @@ button {
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 450px;
-    scroll-snap-align: start;
     padding-right: 1rem;
+    width: 20rem;
+    height: 15rem;
 }
 
 @media screen and (min-width: 960px) {
     .slider-item {
-        width: 100%;
+        width: 30rem;
+        height: 20rem;
     }
 }
 
-
-
-iframe {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-}
-
-.les-rencontres{
+.les-rencontres {
     background-color: black;
     color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.virage {
+    background-color: var(--grenn);
     display: flex;
     flex-direction: column;
     gap: 0.875rem;
@@ -2534,6 +2538,43 @@ iframe {
         gap: 1.5rem;
     }
 }
+
+.section_recap-videos {
+    align-items: center;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media screen and (min-width: 960px) {
+    .section_recap-videos {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+}
+
+.content_ifram-btn {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.btn--sup-vid-red {
+    background-color: var(--red);
+    color: white;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+@media screen and (min-width: 960px) {
+    .btn--sup-vid-red {
+        font-size: 1rem;
+    }
+}
+
 
 /* ////////////////////////////////////EDIT/////////////////////////////// */
 

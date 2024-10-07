@@ -7,6 +7,8 @@ const forms = document.querySelectorAll("[data-form]");
 const btnPopUp = document.querySelectorAll("[data-btn]");
 const scrollContainer = document.querySelector('.slider-items');
 
+
+
 scrollContainer.addEventListener('wheel', function(e) {
     e.preventDefault();
     const scrollAmount = e.deltaY * 2;  // Multipliez pour un effet plus visible
