@@ -62,7 +62,7 @@ function startAutoShow() {
     intervalTxt = setInterval(() => {
         console.log("Running new cycle");
         runAutoShowCycle();
-    }, 16000);
+    }, 24000);
 }
 
 
@@ -122,8 +122,16 @@ function runAutoShowCycle() {
     }, 8000)); // Affiche le troisième onglet après 4 secondes
 
     autoShowTimeouts.push(setTimeout(() => {
-        Tools.addClassRemoveHidden(document.querySelector('.itm_accordion-green'), allCross);
+        Tools.addClassRemoveHidden(document.querySelector('.itm_accordion-blue'), allCross);
     }, 12000)); // Affiche le quatrième onglet après 6 secondes
+
+    autoShowTimeouts.push(setTimeout(() => {
+        Tools.addClassRemoveHidden(document.querySelector('.itm_accordion-red-basic'), allCross);
+    }, 16000)); // Affiche le quatrième onglet après 8 secondes
+
+    autoShowTimeouts.push(setTimeout(() => {
+        Tools.addClassRemoveHidden(document.querySelector('.itm_accordion-green'), allCross);
+    }, 20000)); // Affiche le quatrième onglet après 10 secondes
 }
 
 // function scrollToAnchor(id) {

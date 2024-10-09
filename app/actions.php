@@ -4,12 +4,10 @@ session_start();
 require_once 'includes/_config.php';
 require_once 'includes/_fonctions.php';
 require_once 'includes/_database.php';
-// var_dump($_SESSION['errorsList']);
-// var_dump($_SESSION['token']);
-// var_dump($_REQUEST);
-// unset($_SESSION['errorsList']);
 
 preventCSRF();
+
+// var_dump($_SESSION['errorsList']);
 
 if (!empty($_REQUEST)) {
 
@@ -78,8 +76,8 @@ if (!empty($_REQUEST)) {
         if (!checkInfosFormation($_REQUEST)) {  
             redirectTo('_admin.php');
         } else {
-            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `nb_participants`) VALUES (:name, :subtitle, :description, :date1, :date2, :date3, :time,
-           :localisation, :id_sub_category, :id_category, :id_host, :price, :nb_participants);");
+            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `reduce_price`, `nb_participants`) VALUES (:name, :subtitle, :description, :date1, :date2, :date3, :time,
+           :localisation, :id_sub_category, :id_category, :id_host, :price, :reduce_price, :nb_participants);");
 
             $isInsertOk = $insert->execute([
                 'name' => htmlspecialchars($_REQUEST['name']),
@@ -93,7 +91,8 @@ if (!empty($_REQUEST)) {
                 'id_sub_category' => intval($_REQUEST['subCategory']),
                 'id_category' => intval($_REQUEST['category']),
                 'id_host' => intval($_REQUEST['name_host']),
-                'price' => round($_REQUEST['price'], 2),
+                'price' => intval($_REQUEST['price']),
+                'reduce_price' => intval($_REQUEST['reducePrice']),
                 'nb_participants' => intval($_REQUEST['participants']),
             ]);
 
@@ -263,6 +262,24 @@ if (!empty($_REQUEST)) {
                 unset($_SESSION['errorsList']);
             }
         };
+    }elseif ($_REQUEST['action'] === 'delete-video' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $query = $dbCo->prepare("DELETE FROM `video` WHERE id_video = :id");
+
+        $queryValues = [
+            'id' => $_REQUEST['id_video']
+        ];
+
+        $queryIsOk = $query->execute($queryValues);
+
+        if ($queryIsOk) {
+            addMessage('supp-video_ok');
+            redirectTo('_admin.php');
+        } else {
+            addError('supp-video_ko');
+            redirectTo('_admin.php');
+            unset($_SESSION['errorsList']);
+        }
     }
 }
 

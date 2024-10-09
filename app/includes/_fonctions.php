@@ -1069,13 +1069,136 @@ function getLastFormLppF($dbCo)
     ';
 }
 
+/**
+ * Get all formations from category mouvement and sub category workflow
+ *
+ * @param [type] $dbCo
+ * @return void
+ */
+function getAllFormMouvement($dbCo, $errors)
+{
+
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 4 AND id_sub_category = 13 ORDER BY id_formation DESC');
+    $query->execute();
+
+    while ($formation = $query->fetch()) {
+
+        $formation["date1_"] = traductDate($formation["date1_"]);
+        $formation["date2_"] = traductDate($formation["date2_"]);
+        $formation["date3_"] = traductDate($formation["date3_"]);
+        echo '
+            <card id="formation-'.$formation["id_formation"].'" class="card_formation--red-basic">
+            <div class="card_intro">
+                <h2 class="card_formation-ttl--red-basic"> ' . $formation["name"] . '
+                </h2>
+                <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
+            </div>
+            <div class="card_intro-txt">
+                <p class="content_intro-txt">
+                    ' . $formation["description"] . '
+                </p>
+                <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
+            </div>
+           <div class="content_next_session">
+                    <div class="infos_next_session--var--red-basic">
+                        <ul class="infos_next_session--lst-red-basic">
+                            <l1>Le ' . $formation["date1_"] . '</l1>
+                            <l1>' . $formation["time"] . ' à ' . $formation["localisation"] . '</l1>
+                        </ul>
+                    </div>
+            </div>
+            <div class= "card_price--red-basic">
+                <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
+            </div>
+            <div class="card_content-btn">
+                <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-red-basic">Je m\'incris</button>
+            </div>
+            <!-- <div class="separator--formation"></div> -->
+        </card>
+        <section data-form="'.$formation["id_formation"].'" class="section_pop-up hidden">
+            <div class="pop-up">
+                <div class="pop-up_close-container">
+                    <img data-close=' . $formation["id_formation"] . ' class="pop-up_close" src="../assets/img/close.png" alt="">
+                </div>
+                <div class="pop-up_content">
+                    <form class="form" action="../../actions.php" method="post">
+                        <div class="form_group">
+                            <div class="form_group-input">
+                                <label for="inputLastName" class="">Nom</label>
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
+
+                        echo '</div>';
+
+                        echo'
+                            <div class="form_group-input">
+                                <label for="inputFirstName" class="">Prénom</label>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
+                        </div>
+
+                        <label for="inputEmail" class="">Email</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
+                        <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
+
+                        <div class="content_btn-form">
+                            <input type="submit" value="Valider" class="btn btn--var-green">
+                            <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                            <input type="hidden" name="action" value="post_form">
+                            <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
+                </div>
+            </div>
+        </section>
+        ';
+    }
+}
+
 ////////////////////////////////////ADMIN////////////////////////////
 
 
 function getAllForm($dbCo)
 {
 
-    $query = $dbCo->query('SELECT id_formation,name ,name_host, subtitle, description, date1_, date2_, date3_, time, localisation, id_sub_category, id_category, price, nb_participants FROM formation JOIN host USING (id_host)GROUP BY id_formation, id_sub_category
+    $query = $dbCo->query('SELECT id_formation,name ,name_host, subtitle, description, date1_, date2_, date3_, time, localisation, id_sub_category, id_category, price, reduce_price, nb_participants FROM formation JOIN host USING (id_host)GROUP BY id_formation, id_sub_category
     ORDER BY id_sub_category');
     $query->execute();
 
@@ -1088,12 +1211,21 @@ function getAllForm($dbCo)
         $formation["date3_"] = date('d/m/Y', strtotime($formation["date3_"]));
 
         if ($formation["id_category"] === 1) {
-
+            $color = 'purple';
+        } else if ($formation["id_category"] === 2) {
+            $color = 'orange';
+        } else if ($formation["id_category"] === 3) {
+            $color = 'red';
+        } else if ($formation["id_category"] === 4) {
+            $color = 'red-basic';
+        } else if ($formation["id_category"] === 5) {
+            $color = 'blue';
+        }
             echo '
                 <card class="card_formation--admin">
     
                 <div class="card_intro">
-                    <h2 class="card_formation-ttl-admin--purple"> ' . $formation["name"] . '
+                    <h2 class="card_formation-ttl-admin--' . $color . '"> ' . $formation["name"] . '
                     </h2>
                     <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
                 </div>
@@ -1105,37 +1237,41 @@ function getAllForm($dbCo)
                 </div>
                 <div class="card_infos-location">
                     <p>Où ?: </p>
-                    <p class="tag">' . $formation["localisation"] . '</p>
+                    <p class="tag-' . $color .'">' . $formation["localisation"] . '</p>
                 </div>
                 <div class="card_infos-dates">
                     <p>Prochaines sessions: </p>
                     <ul class="dates_lst">
-                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date1_"] . '</li>
-                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date2_"] . '</li>
-                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag') . '"> ' . $formation["date3_"] . '</li>
+                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag-' . $color .'') . '"> ' . $formation["date1_"] . '</li>
+                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag-' . $color .'') . '"> ' . $formation["date2_"] . '</li>
+                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag-' . $color .'') . '"> ' . $formation["date3_"] . '</li>
                     </ul>
                 </div>
                  <div class="card_infos-time">
                     <p>Horaires: </p>
-                    <p class="tag">' . $formation["time"] . '</p>
+                    <p class="tag-' . $color .'">' . $formation["time"] . '</p>
                 </div>
                 <div class="card_infos-time">
                     <p>Nombre maximum de participants: </p>
-                    <p class="tag">' . $formation["nb_participants"] . '</p>
+                    <p class="tag-' . $color .'">' . $formation["nb_participants"] . '</p>
                 </div>
                 <div class="card_infos-time">
                     <p>Prix: </p>
-                    <p class="tag">' . $formation["price"] . '€</p>
+                    <p class="tag-' . $color .'">' . $formation["price"] . '€</p>
+                </div>
+                <div class="card_infos-time">
+                    <p>Prix avec réduction: </p>
+                    <p class="tag-' . $color .'">' . $formation["reduce_price"] . '€</p>
                 </div>
                 <div class="card_content-btn">
-                <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-purple" type="input" name="action" value="edit-formation">modifier
+                <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-' . $color . '" type="input" name="action" value="edit-formation">modifier
                 </button></a>
                 <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
                 <input type="hidden" name="token" value="' .  $_SESSION['token']  . '">
                     </input>
                 <form class="form_recap-form" action="actions.php" method="post">
 
-                    <button class="btn btn--inscription-purple" type="input" name="action" value="delete-formation">supprimer</button>
+                    <button class="btn btn--inscription-' . $color . '" type="input" name="action" value="delete-formation">supprimer</button>
                     <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
                     </input>
                     <input type="hidden" name="token" value="' .  $_SESSION['token']  . '">
@@ -1146,120 +1282,10 @@ function getAllForm($dbCo)
             </card>
             ';
         }
-        if ($formation["id_category"] === 2) {
-            echo '
-                <card class="card_formation--admin">
-    
-                <div class="card_intro">
-                    <h2 class="card_formation-ttl-admin--orange"> ' . $formation["name"] . '
-                    </h2>
-                    <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
-                </div>
-                <div class="card_intro-txt">
-                    <p>
-                        ' . $formation["description"] . '
-                    </p>
-                    <p class="animator">Animé par : ' . $formation["name_host"] . '</p>
-                </div>
-                <div class="card_infos-location">
-                    <p>Où ?: </p>
-                    <p class="tag--var-orange">' . $formation["localisation"] . '</p>
-                </div>
-                <div class="card_infos-dates">
-                    <p>Prochaines sessions: </p>
-                    <ul class="dates_lst">
-                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date1_"] . '</li>
-                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date2_"] . '</li>
-                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-orange') . '"> ' . $formation["date3_"] . '</li>
-                    </ul>
-                </div>
-                 <div class="card_infos-time">
-                    <p>Horaires: </p>
-                    <p class="tag--var-orange">' . $formation["time"] . '</p>
-                </div>
-                <div class="card_infos-time">
-                    <p>Nombre maximum de participants: </p>
-                    <p class="tag--var-orange">' . $formation["nb_participants"] . '</p>
-                </div>
-                <div class="card_infos-time">
-                    <p>Prix: </p>
-                    <p class="tag--var-orange">' . $formation["price"] . '€</p>
-                </div>
-                <div class="card_content-btn">
-                <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-orange" type="input" name="action" value="edit-formation">modifier
-                </button></a>
-                <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
-                <form class="form_recap-form" action="actions.php" method="post">
-
-                    <button class="btn btn--inscription-orange" type="input" name="action" value="delete-formation">supprimer</button>
-                    <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
-                    </input>
-                    <input type="hidden" name="token" value="' .  $_SESSION['token']  . '">
-                    </input>
-                </form>
-                </div>
-            </card>
-            ';
-        }
-        if ($formation["id_category"] === 3) {
-            echo '
-                <card class="card_formation--admin">
-    
-                <div class="card_intro">
-                    <h2 class="card_formation-ttl-admin--red"> ' . $formation["name"] . '
-                    </h2>
-                    <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
-                </div>
-                <div class="card_intro-txt">
-                    <p>
-                        ' . $formation["description"] . '
-                    </p>
-                    <p class="animator">Animé par : ' . $formation["name_host"] . '</p>
-                </div>
-                <div class="card_infos-location">
-                    <p>Où ?: </p>
-                    <p class="tag--var-red">' . $formation["localisation"] . '</p>
-                </div>
-                <div class="card_infos-dates">
-                    <p>Prochaines sessions: </p>
-                    <ul class="dates_lst">
-                        <li class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '"> ' . $formation["date1_"] . '</li>
-                        <li class="' . ($formation["date2_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '"> ' . $formation["date2_"] . '</li>
-                        <li class="' . ($formation["date3_"] === '01/01/1970' ? 'hidden' : 'tag--var-red') . '"> ' . $formation["date3_"] . '</li>
-                    </ul>
-                </div>
-                 <div class="card_infos-time">
-                    <p>Horaires: </p>
-                    <p class="tag--var-red">' . $formation["time"] . '</p>
-                </div>
-                <div class="card_infos-time">
-                    <p>Nombre maximum de participants: </p>
-                    <p class="tag--var-red">' . $formation["nb_participants"] . '</p>
-                </div>
-                <div class="card_infos-time">
-                    <p>Prix: </p>
-                    <p class="tag--var-red">' . $formation["price"] . '€</p>
-                </div>
-                <div class="card_content-btn">
-                <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-red" type="input" name="action" value="edit-formation">modifier
-                </button></a>
-                <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
-                <form class="form_recap-form" action="actions.php" method="post">
-
-                    <button class="btn btn--inscription-red" type="input" name="action" value="delete-formation">supprimer</button>
-                    <input type="hidden" name="id" value="' . $formation["id_formation"] . '">
-                    </input>
-                    <input type="hidden" name="id" value="' .  $_SESSION['token']  . '">
-                    </input>
-                    <input type="hidden" name="token" value="' .  $_SESSION['token']  . '">
-                    </input>
-                </form>
-                </div>
-            </card>
-            ';
-        }
+        unset($_SESSION['msg']);
+        unset($_SESSION['errorsList']);
     }
-}
+
 
 function editFormation($dbCo, $id, $errors)
 {
@@ -1604,7 +1630,12 @@ function getCursusByDate (PDO $dbCo) {
     ';
 }
 
-
+/**
+ * Get the next formation of category Les pepes flingueurs by date
+ *
+ * @param PDO $dbCo
+ * @return void
+ */
 function getFormLesPepesByDate (PDO $dbCo) {
 
     $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 3 ORDER BY date1_ LIMIT 1');
@@ -1631,6 +1662,80 @@ function getFormLesPepesByDate (PDO $dbCo) {
                     </div>
                 </div>
                 <a class="btn btn--var-white-red" href="/pages/_lespepes.php#formation-' . $formation['id_formation'] . '">en savoir plus >
+                </a>
+            </card>
+    ';
+}
+
+/**
+ * Get the next formation of category Mouvement by date
+ *
+ * @param PDO $dbCo
+ * @return void
+ */
+function getFormMouvementByDate (PDO $dbCo) {
+
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 4 ORDER BY date1_ LIMIT 1');
+
+    $query->execute();
+
+    $formation = $query->fetch();
+
+    $formation["date1_"] = traductDate($formation["date1_"]);
+
+    echo '
+        <card class="card card--var-purple">
+                <h2 class="name_subCategory">'. $formation["name_subcat"] .'</h2>
+                <p class="card_name">'. $formation["name"] .'</p>
+                <p class="card_subtitle">'. $formation["subtitle"] .'</p>
+
+                <div class="content_next_session">
+                    <div class="infos_next_session">
+                        <ul class="infos_next_session--lst">
+                            <l1>'. $formation["date1_"] .'</l1>
+                            <l1>'. $formation["time"] .'</l1>
+                            <l1>'. $formation["localisation"] .'</l1>
+                        </ul>
+                    </div>
+                </div>
+                <a class="btn btn--var-white-red-basic" href="/pages/_mouvement.php#formation-' . $formation['id_formation'] . '">en savoir plus >
+                </a>
+            </card>
+    ';
+}
+
+/**
+ * Get the next formation of category Mouvement by date
+ *
+ * @param PDO $dbCo
+ * @return void
+ */
+function getFormOutsideByDate (PDO $dbCo) {
+
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 5 ORDER BY date1_ LIMIT 1');
+
+    $query->execute();
+
+    $formation = $query->fetch();
+
+    $formation["date1_"] = traductDate($formation["date1_"]);
+
+    echo '
+        <card class="card card--var-purple">
+                <h2 class="name_subCategory">'. $formation["name_subcat"] .'</h2>
+                <p class="card_name">'. $formation["name"] .'</p>
+                <p class="card_subtitle">'. $formation["subtitle"] .'</p>
+
+                <div class="content_next_session">
+                    <div class="infos_next_session">
+                        <ul class="infos_next_session--lst">
+                            <l1>'. $formation["date1_"] .'</l1>
+                            <l1>'. $formation["time"] .'</l1>
+                            <l1>'. $formation["localisation"] .'</l1>
+                        </ul>
+                    </div>
+                </div>
+                <a class="btn btn--var-white-blue" href="/pages/_mouvement.php#formation-' . $formation['id_formation'] . '">en savoir plus >
                 </a>
             </card>
     ';
@@ -1681,8 +1786,11 @@ function getAllVideos (PDO $dbCo) {
         <div class="content_ifram">
         <iframe class="slider-item" width="560" height="400" src="' . $video['link'] . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         <div class="content_ifram-btn">
-            <form>
+            <form action="actions.php" method="POST">
                 <button class="btn btn--sup-vid-red" type="input" name="action" value="delete-video">supprimer la vidéo</button>
+                <input type="hidden" name="id_video" value="' . $video['id_video'] . '">
+                <input type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                </input>
             </form>
         </div>
         </div>
