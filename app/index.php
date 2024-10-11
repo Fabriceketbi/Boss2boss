@@ -24,7 +24,7 @@ require_once 'includes/_fonctions.php';
                     <li><a class="btn btn--header-white--orange" href="./pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                     <li><a class="btn btn--header-white--red" href="./pages/_lespepes.php">les pépés flingueurs</a></li>
                     <li><a class="btn btn--header-white--red-basic" href="./pages/_mouvement-outside.php">mouvement</a></li>
-                    <li><a class="btn btn--header-white--blue" href="./pages/_mouvement-outside.php">outside the box</a></li>
+                    <li><a class="btn btn--header-white--blue" href="./pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
                     <li><a class="btn btn--header-white--green" href="./pages/_b2btv.php">B2B TV</a></li>
                 </ul>
 
@@ -46,7 +46,7 @@ require_once 'includes/_fonctions.php';
                 <li><a class="menu_berger-itm" href="./pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="./pages/_lespepes.php">les pépés flingueurs</a></li>
                 <li><a class="menu_berger-itm" href="./pages/_mouvement-outside.php">mouvement</a></li>
-                <li><a class="menu_berger-itm" href="./pages/_mouvement-outside.php">outside the box</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
                 <li><a class="menu_berger-itm" href="./pages/_b2btv.php">B2B TV</a></li>
                 <li><a class="menu_berger-itm" type="mail" href="mailto:fpineda@fpineda.co">Contact</a></li>
             </ul>
@@ -271,7 +271,7 @@ require_once 'includes/_fonctions.php';
                 </p>
 
                 <div>
-                    <a class="btn btn--var-red-basic" href="pages/">WORKFLOW</a>
+                    <a class="btn btn--var-red-basic" href="pages/_mouvement-outside.php#mouv">WORKFLOW</a>
                 </div>
             </div>
         </section>
@@ -291,7 +291,7 @@ require_once 'includes/_fonctions.php';
                 </p>
 
                 <div>
-                    <a class="btn btn--var-blue" href="pages/">DEVENIR ACTEUR DE SA RÉUSSITE</a>
+                    <a class="btn btn--var-blue" href="pages/_mouvement-outside.php#outside">DEVENIR ACTEUR DE SA RÉUSSITE</a>
                 </div>
             </div>
         </section>

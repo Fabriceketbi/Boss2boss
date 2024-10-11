@@ -33,7 +33,7 @@
         </div>
         <div class="hidden nav_menu_berger-open">
             <ul class="nav_menu_berger-open--lst">
-                <li><a class="menu_berger-itm" href="../pages/afterboss.php">afterboss</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_afterboss.php">afterboss</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_b2btv.php">B2B TV</a></li>

@@ -335,7 +335,7 @@ function checkInfosMail(array $infos): bool
 function getFormAbAw($dbCo, $errors)
 {
 
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 1 ORDER BY id_formation DESC');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 1 ORDER BY id_formation');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -385,7 +385,7 @@ function getFormAbAw($dbCo, $errors)
                                 <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
                                 // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
 
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) &&$_SESSION['id_form-select'] == $formation["id_formation"]) {
                                     
                                     if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
                                         echo
@@ -405,7 +405,7 @@ function getFormAbAw($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
                                 <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) &&$_SESSION['id_form-select'] == $formation["id_formation"]) {
 
                                 if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
         
@@ -424,7 +424,7 @@ function getFormAbAw($dbCo, $errors)
 
                         <label for="inputEmail" class="">Email</label>
                         <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
-                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                         if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
         
                             echo
@@ -458,7 +458,7 @@ function getFormAbAw($dbCo, $errors)
  */
 function getAllFormAbLa($dbCo, $errors)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 3 ORDER BY id_formation DESC');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 3 ORDER BY id_formation');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -478,6 +478,9 @@ function getAllFormAbLa($dbCo, $errors)
                     ' . $formation["description"] . '
                 </p>
                 <p class="animator">Animé par : <span class="animator_name">' . ($formation["name_host"] === 'non précisé' ? 'hidden' : $formation["name_host"]) . '</span></p>
+                <p>
+                    ' . $formation["specification"] . '
+                </p>
             </div>
            <div class="content_next_session">
                     <div class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'infos_next_session--var') . '">
@@ -514,7 +517,7 @@ function getAllFormAbLa($dbCo, $errors)
                                 <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
                                 // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
 
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                                     
                                     if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
                                         echo
@@ -534,7 +537,7 @@ function getAllFormAbLa($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
                                 <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
 
                                 if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
         
@@ -553,7 +556,7 @@ function getAllFormAbLa($dbCo, $errors)
 
                         <label for="inputEmail" class="">Email</label>
                         <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
-                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                         if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
         
                             echo
@@ -694,7 +697,7 @@ function getAllFormE2D5J($dbCo, $errors)
                                 <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
                                 // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
 
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                                     
                                     if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
                                         echo
@@ -714,7 +717,7 @@ function getAllFormE2D5J($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
                                 <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
 
                                 if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
         
@@ -733,7 +736,7 @@ function getAllFormE2D5J($dbCo, $errors)
 
                         <label for="inputEmail" class="">Email</label>
                         <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
-                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                         if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
         
                             echo
@@ -813,7 +816,7 @@ function getAllFormE2D3J($dbCo, $errors)
                                 <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
                                 // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
 
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                                     
                                     if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
                                         echo
@@ -833,7 +836,7 @@ function getAllFormE2D3J($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
                                 <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
 
                                 if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
         
@@ -852,7 +855,7 @@ function getAllFormE2D3J($dbCo, $errors)
 
                         <label for="inputEmail" class="">Email</label>
                         <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
-                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                         if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
         
                             echo
@@ -966,9 +969,9 @@ function getAllFormLppF($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputLastName" class="">Nom</label>
                                 <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
-                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+                                // var_dump($_SESSION['id_form-select']); var_dump($formation["id_formation"]);
 
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) &&$_SESSION['id_form-select'] == $formation["id_formation"]) {
                                     
                                     if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
                                         echo
@@ -988,7 +991,7 @@ function getAllFormLppF($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
                                 <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) &&$_SESSION['id_form-select'] == $formation["id_formation"]) {
 
                                 if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
         
@@ -1007,7 +1010,7 @@ function getAllFormLppF($dbCo, $errors)
 
                         <label for="inputEmail" class="">Email</label>
                         <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
-                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                         if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
         
                             echo
@@ -1107,8 +1110,11 @@ function getAllFormMouvement($dbCo, $errors)
                         </ul>
                     </div>
             </div>
-            <div class= "card_price--red-basic">
+            <div class= "card_price--red-basic content_price">
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
+            </div>
+            <div class= "card_price--red-basic content_price">
+                <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-red-basic">Je m\'incris</button>
@@ -1128,7 +1134,7 @@ function getAllFormMouvement($dbCo, $errors)
                                 <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
                                 // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
 
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                                     
                                     if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
                                         echo
@@ -1148,7 +1154,7 @@ function getAllFormMouvement($dbCo, $errors)
                             <div class="form_group-input">
                                 <label for="inputFirstName" class="">Prénom</label>
                                 <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
-                                if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
 
                                 if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
         
@@ -1167,7 +1173,130 @@ function getAllFormMouvement($dbCo, $errors)
 
                         <label for="inputEmail" class="">Email</label>
                         <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
-                        if ($_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
+                        if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
+        
+                            echo
+                            displayErrorMsg('email_null', $_SESSION['errorsList'], $errors);
+                            }
+                        }
+                       echo' <label for="inputFormationName" class="">Sujet</label>
+                        <input type="text" name="formationName" class="input" id="inputFormationName" aria-describedby="" value="' . $formation["name"] . '">
+
+                        <div class="content_btn-form">
+                            <input type="submit" value="Valider" class="btn btn--var-green">
+                            <input id="token" type="hidden" name="token" value="' . $_SESSION['token'] . '">
+                            <input type="hidden" name="action" value="post_form">
+                            <input type="hidden" name="id_formation" value="' . $formation["id_formation"] . '">
+                            <input type="hidden" name="id_category" value="' . $formation["id_category"] . '">
+                        </div>';
+                    echo'</form>
+                </div>
+            </div>
+        </section>
+        ';
+    }
+}
+
+/**
+ * Get all formations from category mouvement and sub category workflow
+ *
+ * @param [type] $dbCo
+ * @return void
+ */
+function getAllFormOutside($dbCo, $errors)
+{
+
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 5 AND id_sub_category = 13 ORDER BY id_formation DESC');
+    $query->execute();
+
+    while ($formation = $query->fetch()) {
+
+        $formation["date1_"] = traductDate($formation["date1_"]);
+        $formation["date2_"] = traductDate($formation["date2_"]);
+        $formation["date3_"] = traductDate($formation["date3_"]);
+        echo '
+            <card id="formation-'.$formation["id_formation"].'" class="card_formation--blue">
+            <div class="card_intro">
+                <h2 class="card_formation-ttl--blue"> ' . $formation["name"] . '
+                </h2>
+                <p class="card_sub-txt">' . $formation["subtitle"] . '</p>
+            </div>
+            <div class="card_intro-txt">
+                <p class="content_intro-txt">
+                    ' . $formation["description"] . '
+                </p>
+                <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
+            </div>
+           <div class="content_next_session">
+                    <div class="infos_next_session--var--blue">
+                        <ul class="infos_next_session--lst-blue">
+                            <l1>Le ' . $formation["date1_"] . '</l1>
+                            <l1>' . $formation["time"] . ' à ' . $formation["localisation"] . '</l1>
+                        </ul>
+                    </div>
+            </div>
+            <div class= "card_price--blue content_price">
+                <p>Tarif: Gratuit réservé aux étudiants</p>
+            </div>
+            <div class="card_content-btn">
+                <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-blue">Je m\'incris</button>
+            </div>
+            <!-- <div class="separator--formation"></div> -->
+        </card>
+        <section data-form="'.$formation["id_formation"].'" class="section_pop-up hidden">
+            <div class="pop-up">
+                <div class="pop-up_close-container">
+                    <img data-close=' . $formation["id_formation"] . ' class="pop-up_close" src="../assets/img/close.png" alt="">
+                </div>
+                <div class="pop-up_content">
+                    <form class="form" action="../../actions.php" method="post">
+                        <div class="form_group">
+                            <div class="form_group-input">
+                                <label for="inputLastName" class="">Nom</label>
+                                <input type="text" name="lastname" class="input" id="inputLastName" aria-describedby="">';
+                                // var_dump($_SESSION['id_form-select'], $formation["id_formation"]);
+
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_null', $_SESSION['errorsList'])) {
+                                        echo
+                                        displayErrorMsg('lastname_null', $_SESSION['errorsList'], $errors);
+                                    }
+                                    
+                                    if (isset($_SESSION['errorsList']) && in_array('lastname_size', $_SESSION['errorsList'])) {
+            
+                                        echo
+                                        displayErrorMsg('lastname_size', $_SESSION['errorsList'], $errors);
+                                        }
+                                }
+
+                        echo '</div>';
+
+                        echo'
+                            <div class="form_group-input">
+                                <label for="inputFirstName" class="">Prénom</label>
+                                <input type="text" name="firstname" class="input" id="inputFirstName" aria-describedby="">';
+                                if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_null', $_SESSION['errorsList'])) {
+        
+                                    echo
+                                    displayErrorMsg('firstname_null', $_SESSION['errorsList'], $errors);
+                                    }
+
+                                if (isset($_SESSION['errorsList']) && in_array('firstname_size', $_SESSION['errorsList'])) {
+    
+                                    echo
+                                    displayErrorMsg('firstname_size', $_SESSION['errorsList'], $errors);
+                                    }
+                                }
+                        echo '</div>
+                        </div>
+
+                        <label for="inputEmail" class="">Email</label>
+                        <input type="email" name="email" class="input" id="inputEmail" aria-describedby="">';
+                        if (isset($_SESSION['id_form-select']) && $_SESSION['id_form-select'] == $formation["id_formation"]) {
                         if (isset($_SESSION['errorsList']) && in_array('email_null', $_SESSION['errorsList'])) {
         
                             echo
@@ -1198,7 +1327,7 @@ function getAllFormMouvement($dbCo, $errors)
 function getAllForm($dbCo)
 {
 
-    $query = $dbCo->query('SELECT id_formation,name ,name_host, subtitle, description, date1_, date2_, date3_, time, localisation, id_sub_category, id_category, price, reduce_price, nb_participants FROM formation JOIN host USING (id_host)GROUP BY id_formation, id_sub_category
+    $query = $dbCo->query('SELECT id_formation,name ,name_host, subtitle, description, specification, date1_, date2_, date3_, time, localisation, id_sub_category, id_category, price, reduce_price, nb_participants FROM formation JOIN host USING (id_host)GROUP BY id_formation, id_sub_category
     ORDER BY id_sub_category');
     $query->execute();
 
@@ -1234,6 +1363,9 @@ function getAllForm($dbCo)
                         ' . $formation["description"] . '
                     </p>
                     <p class="animator">Animé par : ' . $formation["name_host"] . '</p>
+                    <p>
+                        ' . $formation["specification"] . '
+                    </p>
                 </div>
                 <div class="card_infos-location">
                     <p>Où ?: </p>
@@ -1311,6 +1443,10 @@ function editFormation($dbCo, $id, $errors)
 
                     <label for="inputDescription" class="">Description</label>
                     <textarea type="textearea" name="description" class="input-txt" " id="inputDescription" aria-describedby="" rows="5" cols="33">' . $formation["description"] . '</textarea>
+
+
+                    <label for="inputSpecification" class="">Précision</label>
+                    <textarea type="textearea" name="specification" class="input-txt" id="inputSpecification" aria-describedby="" rows="5" cols="33">' . $formation["specification"] . '</textarea>
 
 
                     <label class="edit_label" for="intervenant-select">Ancien intervenant : ' . $formation["name_host"] . '</label>
@@ -1698,7 +1834,7 @@ function getFormMouvementByDate (PDO $dbCo) {
                         </ul>
                     </div>
                 </div>
-                <a class="btn btn--var-white-red-basic" href="/pages/_mouvement.php#formation-' . $formation['id_formation'] . '">en savoir plus >
+                <a class="btn btn--var-white-red-basic" href="/pages/_mouvement-outside.php#formation-' . $formation['id_formation'] . '">en savoir plus >
                 </a>
             </card>
     ';
@@ -1735,7 +1871,7 @@ function getFormOutsideByDate (PDO $dbCo) {
                         </ul>
                     </div>
                 </div>
-                <a class="btn btn--var-white-blue" href="/pages/_mouvement.php#formation-' . $formation['id_formation'] . '">en savoir plus >
+                <a class="btn btn--var-white-blue" href="/pages/_mouvement-outside.php#formation-' . $formation['id_formation'] . '">en savoir plus >
                 </a>
             </card>
     ';

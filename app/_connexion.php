@@ -20,30 +20,38 @@
 <body>
 
 <header>
-        <div class="header_nav--desktop">
-            <a href="/"><img class="nav_logo" src="assets/img/boss2boss_white.png" alt=""></a>
+<div class="header_nav--desktop">
+            <a href="/"><img class="nav_logo" src="assets/img/b2b.png" alt=""></a>
             <nav>
                 <ul class="nav_lst">
-                    <li><a class="btn btn--header-white--purple" href="./pages/_afterboss.php">Afterboss</a></li>
-                    <li><a class="btn btn--header-white--orange" href="./pages/_entrepreneur2demain.php">Entrepreneurs2demain</a></li>
-                    <li><a class="btn btn--header-white--red" href="./pages/_lespepes.php">Les Pépés Flingueurs</a></li>
+                    <li><a class="btn btn--header-white--purple active" href="./pages/_afterboss.php">afterboss</a></li>
+                    <li><a class="btn btn--header-white--orange" href="./pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
+                    <li><a class="btn btn--header-white--red" href="./pages/_lespepes.php">les pépés flingueurs</a></li>
+                    <li><a class="btn btn--header-white--red-basic" href="./pages/_mouvement-outside.php">mouvement</a></li>
+                    <li><a class="btn btn--header-white--blue" href="./pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
+                    <li><a class="btn btn--header-white--green" href="./pages/_b2btv.php">B2B TV</a></li>
                 </ul>
-                
+
             </nav>
             <a type="mail" href="mailto:fpineda@fpineda.co" class="btn btn--var-green">Contact</a>
         </div>
         <div class="header_nav--mobile">
-            <div class="nav_logo">
-                <a href=""><img src="assets/svg/logo.svg" alt=""></a>
+            <div class="nav_logo-mobile">
+                <a href=""><img class="nav_logo-mobile" src="assets/svg/logo.svg" alt=""></a>
             </div>
-            <div class="nav_menu_berger"><img src="assets/svg/menu_berger.svg" alt="">
+
+            <div class="nav_menu_berger">
+                <img class="" src="assets/svg/menu_berger.svg" alt="">
             </div>
         </div>
-        <div class="nav_menu_berger-open">
+        <div class="hidden nav_menu_berger-open">
             <ul class="nav_menu_berger-open--lst">
-                <li><a class="menu_berger-itm" href="./pages/_afterboss.php">Afterboss</a></li>
-                <li><a class="menu_berger-itm" href="./pages/_entrepreneur2demain.php">Entrepreneurs2demain</a></li>
-                <li><a class="menu_berger-itm" href="./pages/_lespepes.php">Les Pépés Flingueurs</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_afterboss.php">afterboss</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_lespepes.php">les pépés flingueurs</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_mouvement-outside.php">mouvement</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
+                <li><a class="menu_berger-itm" href="./pages/_b2btv.php">B2B TV</a></li>
                 <li><a class="menu_berger-itm" type="mail" href="mailto:fpineda@fpineda.co">Contact</a></li>
             </ul>
         </div>

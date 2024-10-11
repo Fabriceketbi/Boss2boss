@@ -76,13 +76,14 @@ if (!empty($_REQUEST)) {
         if (!checkInfosFormation($_REQUEST)) {  
             redirectTo('_admin.php');
         } else {
-            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `reduce_price`, `nb_participants`) VALUES (:name, :subtitle, :description, :date1, :date2, :date3, :time,
+            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `specification`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `reduce_price`, `nb_participants`) VALUES (:name, :subtitle, :description, :specification, :date1, :date2, :date3, :time,
            :localisation, :id_sub_category, :id_category, :id_host, :price, :reduce_price, :nb_participants);");
 
             $isInsertOk = $insert->execute([
                 'name' => htmlspecialchars($_REQUEST['name']),
                 'subtitle' => htmlspecialchars($_REQUEST['subtitle']),
                 'description' => htmlspecialchars($_REQUEST['description']),
+                'specification' => htmlspecialchars($_REQUEST['specification']),
                 'date1' => date('Y-m-d', strtotime($_REQUEST['date1'])),
                 'date2' => date('Y-m-d', strtotime($_REQUEST['date2'])),
                 'date3' => date('Y-m-d', strtotime($_REQUEST['date3'])),
@@ -130,12 +131,13 @@ if (!empty($_REQUEST)) {
 
         }else{
 
-        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, localisation = :localisation WHERE id_formation =:id");
+        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, localisation = :localisation WHERE id_formation =:id");
 
         $queryValues = [
             'name' => htmlspecialchars($_REQUEST['name']),
             'subtitle' => htmlspecialchars($_REQUEST['subtitle']),
             'description' => htmlspecialchars($_REQUEST['description']),
+            'specification' => htmlspecialchars($_REQUEST['specification']),
             'id_sub_category' => intval($_REQUEST['subCategory']),
             'id_category' => intval($_REQUEST['category']),
             'id_host' => intval($_REQUEST['name_host']),
@@ -201,8 +203,8 @@ if (!empty($_REQUEST)) {
 
     }if ($_REQUEST['action'] === 'post_form' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
         if (!checkInfosMail($_REQUEST)) {
-// var_dump($_REQUEST);
             $_SESSION['id_form-select'] = $_REQUEST['id_formation'];
             addError('echec_inscription');
             if ($_REQUEST['id_category'] === "1") {
@@ -222,9 +224,6 @@ if (!empty($_REQUEST)) {
         $message =  htmlspecialchars($_REQUEST['lastname']) . " " . htmlspecialchars($_REQUEST['firstname']) . " souhaite s'inscrire pour la formation " . htmlspecialchars($_REQUEST['formationName']);
         $headers = htmlspecialchars($_REQUEST['email']);
 
-        var_dump($message);
-        var_dump($headers);
-
         $_SESSION['id_form-select'] = $_REQUEST['id_formation'];
         // mail($to, $subject, $message, $headers);
         addMessage('inscription_ok');  
@@ -238,7 +237,12 @@ if (!empty($_REQUEST)) {
             redirectTo('pages/_lespepes.php');
         }
 
+        if ($_REQUEST['id_category'] === "4" || $_REQUEST['id_category'] === "5") {
+            redirectTo('pages/_mouvement-outside.php');
         }
+        
+    }
+
 
     }if ($_REQUEST['action'] === 'add-video' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 

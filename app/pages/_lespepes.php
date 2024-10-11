@@ -7,7 +7,6 @@ include '../includes/_database.php';
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +42,7 @@ include '../includes/_database.php';
         </div>
         <div class="hidden nav_menu_berger-open">
             <ul class="nav_menu_berger-open--lst">
-                <li><a class="menu_berger-itm" href="../pages/afterboss.php">afterboss</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_afterboss.php">afterboss</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_mouvement-outside.php">mouvement</a></li>
@@ -85,6 +84,7 @@ include '../includes/_database.php';
                 
             }
             unset($_SESSION['msg']);
+            unset($_SESSION['id_form-select']);
         ?>
     <section class="section_card--var-lespepes">
             <div class="presentation">
@@ -109,7 +109,6 @@ include '../includes/_database.php';
 
             </section>
 
-            <!-- <p class="txt_short--var">LA PROCHAINE SESSION</p> -->
         </div>
     </section>
     <div class="infos_offers--var-red">

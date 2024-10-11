@@ -43,7 +43,7 @@ include '../includes/_database.php';
         </div>
         <div class="hidden nav_menu_berger-open">
             <ul class="nav_menu_berger-open--lst">
-                <li><a class="menu_berger-itm" href="../pages/afterboss.php">afterboss</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_afterboss.php">afterboss</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_mouvement-outside.php">mouvement</a></li>
@@ -85,6 +85,7 @@ include '../includes/_database.php';
                 
             }
             unset($_SESSION['msg']);
+            unset($_SESSION['id_form-select']);
         ?>
     <section class="section_card--var order1">
             <div class="presentation">
