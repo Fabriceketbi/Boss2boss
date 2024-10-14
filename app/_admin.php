@@ -5,6 +5,7 @@ include './includes/_config.php';
 
 session_start();
 generateToken();
+
 // unset($_SESSION['msg']);
 // unset($_SESSION['errorsList']);
 
@@ -26,9 +27,10 @@ if (!isset($_SESSION["id_admin"])) {
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body>
-<header>
-<div class="header_nav--desktop">
+    <header>
+        <div class="header_nav--desktop">
             <a href="/"><img class="nav_logo" src="assets/img/b2b.png" alt=""></a>
             <nav>
                 <ul class="nav_lst">
@@ -66,18 +68,68 @@ if (!isset($_SESSION["id_admin"])) {
 
     </header>
 
-
-
     <main class="main_admin">
+
+        <?php
+        if (isset($_SESSION['errorsList']) && in_array('add-formation_ko', $_SESSION['errorsList'])) {
+            getError('add-formation_ko', $errors);
+        }
+
+        if (isset($_SESSION['errorsList']) && in_array('edit-formation_ko', $_SESSION['errorsList'])) {
+            getError('edit-formation_ko', $errors);
+        }
+
+        if (isset($_SESSION['errorsList']) && in_array('supp-formation_ko', $_SESSION['errorsList'])) {
+            getError('supp-formation_ko', $errors);
+        }
+
+        if (isset($_SESSION['errorsList']) && in_array('insert_video_ko', $_SESSION['errorsList'])) {
+            getError('insert_video_ko', $errors);
+        }
+
+        if (isset($_SESSION['errorsList']) && in_array('supp-video_ko', $_SESSION['errorsList'])) {
+            getError('supp-video_ko', $errors);
+        }
+
+        if (isset($_SESSION['msg']) && in_array('add-formation_ok', $_SESSION['msg'])) {
+
+            getMessage('add-formation_ok', $messages);
+        }
+
+        if (isset($_SESSION['msg']) && in_array('edit-formation_ok', $_SESSION['msg'])) {
+
+            getMessage('edit-formation_ok', $messages);
+        }
+
+        if (isset($_SESSION['msg']) && in_array('supp-formation_ok', $_SESSION['msg'])) {
+
+            getMessage('supp-formation_ok', $messages);
+        }
+
+        if (isset($_SESSION['msg']) && in_array('insert_video_ok', $_SESSION['msg'])) {
+
+            getMessage('insert_video_ok', $messages);
+        }
+
+        if (isset($_SESSION['msg']) && in_array('supp-video_ok', $_SESSION['msg'])) {
+
+            getMessage('supp-video_ok', $messages);
+        }
+
+        unset($_SESSION['msg']);
+        unset($_SESSION['id_form-select']);
+        ?>
+
+
         <div class="deconnection">
-            <p><?= (!empty( $_SESSION['admin_name'] ) ? 'Bonjour ' . $_SESSION['admin_name'] : '') ?></p>
+            <p><?= (!empty($_SESSION['admin_name']) ? 'Bonjour ' . $_SESSION['admin_name'] : '') ?></p>
             <form action="../actions.php" method="post">
                 <input type="submit" value="Déconnexion" class="btn btn--var-deconnection">
-                <input  type="hidden" name="action" value="deconnection">
+                <input type="hidden" name="action" value="deconnection">
             </form>
         </div>
         <section class="section_form">
-            
+
             <div class="content_form">
                 <h2>Formulaire de création de formation</h2>
                 <form id="" class="form_formation" action="../actions.php" method="post">
@@ -96,7 +148,7 @@ if (!isset($_SESSION["id_admin"])) {
                     <textarea type="textearea" name="specification" class="input-txt" id="inputSpecification" aria-describedby="" rows="5" cols="33"></textarea>
 
 
-                    <label for="intervenant-select">intervenant</label>
+                    <label for="intervenant-select">intervenant *</label>
 
                     <select class="input" name="name_host" id="">
                         <option value="">Choisir un intervenant</option>
@@ -110,7 +162,7 @@ if (!isset($_SESSION["id_admin"])) {
                     } ?>
 
 
-                    <label for="category-select">catégorie</label>
+                    <label for="category-select">catégorie *</label>
 
                     <select class="input" name="category" id="">
                         <option value="">Choisir une catégorie</option>
@@ -124,7 +176,7 @@ if (!isset($_SESSION["id_admin"])) {
                     } ?>
 
 
-                    <label for="">sous-catégorie</label>
+                    <label for="">sous-catégorie *</label>
 
                     <select class="input" name="subCategory" id="">
                         <option value="">Choisir une sous-catégorie</option>
@@ -141,15 +193,15 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputLocalisation" class="">Localisation</label>
                     <input type="text" name="localisation" class="input" id="inputLocalisation" aria-describedby="">
 
-                    <label for="inputParticipant" class="">Nombre maximum de participant</label>
+                    <label for="inputParticipant" class="">Nombre maximum de participant * (si pas précisé, mettre 0)</label>
                     <input type="text" name="participants" class="input" id="inputParticipant" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('nb_participants', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('nb_participants', $_SESSION['errorsList'], $errors);
-                            unset($_SESSION['errorsList']);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('nb_participants', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('nb_participants', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
 
                     ?>
 
@@ -165,15 +217,15 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputTime" class="">Durée</label>
                     <input type="text" name="time" class="input" id="inputTime" aria-describedby="">
 
-                    <label for="inputPrice" class="">Prix</label>
+                    <label for="inputPrice" class="">Prix * (si pas précisé, mettre 0)</label>
                     <input type="text" name="price" class="input" id="inputPrice" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('price', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('price', $_SESSION['errorsList'], $errors);
-                            unset($_SESSION['errorsList']);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('price', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('price', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
 
                     ?>
 
@@ -198,11 +250,11 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="text" name="name" class="input" id="inputName" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('name_host', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('name_host', $_SESSION['errorsList'], $errors);
-                            unset($_SESSION['errorsList']);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('name_host', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('name_host', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
 
                     ?>
 
@@ -223,11 +275,11 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="text" name="name" class="input" id="inputName" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('name_category', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('name_category', $_SESSION['errorsList'], $errors);
-                            unset($_SESSION['errorsList']);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('name_category', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('name_category', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
 
                     ?>
 
@@ -247,11 +299,11 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="text" name="name" class="input" id="inputName" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
-                            unset($_SESSION['errorsList']);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
 
                     ?>
 
@@ -259,7 +311,7 @@ if (!isset($_SESSION["id_admin"])) {
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="add-sub-category">
-                        
+
                     </div>
                 </form>
 
@@ -272,11 +324,11 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="text" name="link" class="input" id="inputLink" aria-describedby="">
 
                     <?
-                        // if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
-                        //     echo
-                        //     displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
-                        //     unset($_SESSION['errorsList']);
-                        // }
+                    // if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
+                    //     echo
+                    //     displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
+                    //     unset($_SESSION['errorsList']);
+                    // }
 
                     ?>
 
@@ -284,7 +336,7 @@ if (!isset($_SESSION["id_admin"])) {
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="add-video">
-                        
+
                     </div>
                 </form>
 
@@ -302,10 +354,10 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="text" name="nameAdmin" class="input" id="inputNameAdmin" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('create_nameAdmin', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('create_nameAdmin', $_SESSION['errorsList'], $errors);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('create_nameAdmin', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('create_nameAdmin', $_SESSION['errorsList'], $errors);
+                    }
 
                     ?>
 
@@ -313,11 +365,11 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="password" name="password" class="input" id="inputPassword" aria-describedby="">
 
                     <?
-                        if (isset($_SESSION['errorsList']) && in_array('password', $_SESSION['errorsList'])) {
-                            echo
-                            displayErrorMsg('password', $_SESSION['errorsList'], $errors);
-                            unset($_SESSION['errorsList']);
-                        }
+                    if (isset($_SESSION['errorsList']) && in_array('password', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('password', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
 
                     ?>
 
@@ -336,14 +388,14 @@ if (!isset($_SESSION["id_admin"])) {
 
         </section>
 
-        <h2>Vidéos enregistrées</h2> 
+        <h2>Vidéos enregistrées</h2>
         <section class="section_recap-videos">
-            <?= 
+            <?=
             getAllVideos($dbCo);
             ?>
         </section>
     </main>
-
+    <script type="module" src="../js/script-admin.js"></script>
 
 </body>
 

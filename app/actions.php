@@ -120,7 +120,7 @@ if (!empty($_REQUEST)) {
             addMessage('supp-formation_ok');
             redirectTo('_admin.php');
         } else {
-            addError('add-formation_ko');
+            addError('supp-formation_ko');
             redirectTo('_admin.php');
             unset($_SESSION['errorsList']);
         }
@@ -131,7 +131,7 @@ if (!empty($_REQUEST)) {
 
         }else{
 
-        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, localisation = :localisation WHERE id_formation =:id");
+        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, price = :price, reduce_price = :reduce_price, localisation = :localisation WHERE id_formation =:id");
 
         $queryValues = [
             'name' => htmlspecialchars($_REQUEST['name']),
@@ -145,6 +145,8 @@ if (!empty($_REQUEST)) {
             'date2' => date('Y-m-d', strtotime($_REQUEST['date2'])),
             'date3' => date('Y-m-d', strtotime($_REQUEST['date3'])),
             'time' => htmlspecialchars($_REQUEST['time']),
+            'price' => intval($_REQUEST['price']),
+            'reduce_price' => intval($_REQUEST['reducePrice']),
             'localisation' => htmlspecialchars($_REQUEST['localisation']),
             'id' => intval($_REQUEST['id']),
         ];

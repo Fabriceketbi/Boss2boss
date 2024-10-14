@@ -44,18 +44,19 @@ $errors = [
     'email_null' => 'Saisissez un email',
     'email_null--atelier' => 'Saisissez un email',
     'echec_inscription' => 'Échec inscription',
+    'supp-formation_ko' => 'Formation non supprimée',
     'create_video-ko' => 'Echec lors de l\'ajout de la video',
     'insert_video-ko' => 'erreur enregistrement vidéo',
     'supp-video_ko' => 'Erreur lors de la suppression de la video',
 ];
 
 $messages = [
-    'add_product_ok' => 'Produit enregistré',
     'add-subCategory_ok' => 'Sous-catégorie ajoutée',
     'add-category_ok' => 'Categorie ajoutée',
     'add-intervenant_ok' => 'Intervenant ajouté',
     'add-formation_ok' => 'Formation ajoutée',
     'edit-formation_ok' => 'Formation modifiée',
+    'supp-formation_ok' => 'Formation supprimée',
     'inscription_ok' => 'Inscription reussie',
     'insert_video_ok' => 'Video ajoutée',
     'supp-video_ok' => 'La video à bien été supprimée',

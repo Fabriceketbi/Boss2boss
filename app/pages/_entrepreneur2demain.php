@@ -96,7 +96,6 @@ include '../includes/_database.php';
             et/ou qui sont en pleine réflexion et décision de le devenir ! Deux parcours initiaux pour comprendre, poser et envisager les décisions à prendre pour mettre son business en situation de réussite potentielle.
             </p>
             <div class="content_offers">
-                    <h2 class="card_title-underline">Découvrez nos offres</h2>
                     <div class="content_offers_btn">
                         <a href="#cursus5j" class="btn btn--var-orange">CURSUS 5 JOURS</a>
                         <a href="#cursus3j" class="btn btn--var-orange">CURSUS 3 JOURS</a>
