@@ -1,7 +1,9 @@
 <?php
 session_start();
+
 unset($_SESSION['errorsList']);
 require_once 'includes/_fonctions.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -16,21 +18,33 @@ require_once 'includes/_fonctions.php';
 
 <body>
     <header>
-        <div class="header_nav--desktop">
+        <nav class="header_nav--desktop">
             <a href="/"><img class="nav_logo" src="assets/img/b2b.png" alt=""></a>
-            <nav>
+            
                 <ul class="nav_lst">
-                    <li><a class="btn btn--header-white--purple active" href="./pages/_afterboss.php">afterboss</a></li>
-                    <li><a class="btn btn--header-white--orange" href="./pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
-                    <li><a class="btn btn--header-white--red" href="./pages/_lespepes.php">les pépés flingueurs</a></li>
-                    <li><a class="btn btn--header-white--red-basic" href="./pages/_mouvement-outside.php">mouvement</a></li>
-                    <li><a class="btn btn--header-white--blue" href="./pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
-                    <li><a class="btn btn--header-white--green" href="./pages/_b2btv.php">B2B TV</a></li>
+                    <li>
+                        <a class="btn btn--header-white--purple active" href="./pages/_afterboss.php">afterboss</a>
+                    </li>
+                    <li>
+                        <a class="btn btn--header-white--orange" href="./pages/_entrepreneur2demain.php">entrepreneur2demain</a>
+                    </li>
+                    <li>
+                        <a class="btn btn--header-white--red" href="./pages/_lespepes.php">les pépés flingueurs</a>
+                    </li>
+                    <li>
+                        <a class="btn btn--header-white--red-basic" href="./pages/_mouvement-outside.php">mouvement</a>
+                    </li>
+                    <li>
+                        <a class="btn btn--header-white--blue" href="./pages/_mouvement-outside.php#outsideTheBox">outside the box</a>
+                    </li>
+                    <li>
+                        <a class="btn btn--header-white--green" href="./pages/_b2btv.php">B2B TV</a>
+                    </li>
                 </ul>
 
-            </nav>
+            
             <a type="mail" href="mailto:fpineda@fpineda.co" class="btn btn--var-green">Contact</a>
-        </div>
+        </nav>
         <div class="header_nav--mobile">
             <div class="nav_logo-mobile">
                 <a href=""><img class="nav_logo-mobile" src="assets/svg/logo.svg" alt=""></a>
@@ -61,35 +75,41 @@ require_once 'includes/_fonctions.php';
                     <div class="content_bublle">
                         <ul>
                             <li data-tab="tab1" class="hidden itm_bublle itm_bublle-purple">
-                                <p class="txt_bublle-purple">
+                                <!-- <p class="txt_bublle-purple">
                                     Et si on se parlait
                                     vraiment,
                                     <span class="txt_short--span-purple">sans tabou</span> ?
-                                </p>
+                                </p> -->
+                                <img class="bublle_item" src="assets/img/bulle-purple.png" alt="">
                             </li>
                             <li data-tab="tab2" class="hidden itm_bublle itm_bublle-orange">
-                                Besoin d’aide avant le saut dans le grand bain de
-                                <span class="txt_short--span-orange">l’entreprenariat</span> ?
+                                <!-- Besoin d’aide avant le saut dans le grand bain de
+                                <span class="txt_short--span-orange">l’entreprenariat</span> ? -->
+                                <img class="bublle_item" src="assets/img/bulle-orange.png" alt="">
                             </li>
                             <li data-tab="tab3" class="hidden itm_bublle itm_bublle-red">
-                                70 ans cumulés d’entreprenariat, avec humour et
-                                <span class="txt_short--span-red">sans complexe</span> !
+                                <!-- 70 ans cumulés d’entreprenariat, avec humour et
+                                <span class="txt_short--span-red">sans complexe</span> ! -->
+                                <img class="bublle_item" src="assets/img/bulle-red.png" alt="">
                             </li>
                             <li data-tab="tab4" class="hidden itm_bublle itm_bublle-blue">
-                                <p class="txt_bublle-blue">
+                                <!-- <p class="txt_bublle-blue">
                                     Devenir acteur de sa
                                     <span class="txt_short--span-blue">réussite</span> !
-                                </p>
+                                </p> -->
+                                <img class="bublle_item" src="assets/img/bulle-blue.png" alt="">
                             </li>
                             <li data-tab="tab5" class="hidden itm_bublle itm_bublle-red-basic">
-                                <p class="txt_bublle-red-basic">
+                                <!-- <p class="txt_bublle-red-basic">
                                     Devenir acteur du
                                     <span class="txt_short--span-red-basic">changement</span> !
-                                </p>
+                                </p> -->
+                                <img class="bublle_item" src="assets/img/bulle-red-basic.png" alt="">
                             </li>
                             <li data-tab="tab6" class="hidden itm_bublle itm_bublle-black">
-                                Des parcours de vie
-                                inspirants
+                                <!-- Des parcours de vie
+                                inspirants -->
+                                <img class="bublle_item" src="assets/img/bulle-green.png" alt="">
                             </li>
 
                         </ul>
@@ -136,8 +156,11 @@ require_once 'includes/_fonctions.php';
                                 </p>
                             </li>
                             <li data-tab="tab6" class="itm_accordion itm_accordion-green">
-                                <img class="img_accordion-green" src="assets/img/les-rencontres-fullblack.png" alt="" class="img_accordion-green">
-                                <img data-tab="tab6" class="icon-more icon-more--rotate" src="assets/img/icon-plus.png" alt="">
+                                <div class="content_item-green">
+
+                                    <img class="img_accordion-green" src="assets/img/les-rencontres-black-xl.png" alt="" class="img_accordion-green">
+                                    <img data-tab="tab6" class="icon-more icon-more--rotate" src="assets/img/icon-plus.png" alt="">
+                                </div>
                                 <p id="tab6" data-tab-content=""
                                     class="txt_accordion-green hidden">
                                     En toute intimité au coeur de l’emploi et de l’entreprise
@@ -211,9 +234,13 @@ require_once 'includes/_fonctions.php';
                     Si personne ne détient la vérité, à plusieurs, on est sûrement plus intelligents ! Sur une thématique donnée, des échanges simples, sans tabou sur les maux qui pèsent sur les chef.fes d’entreprise comme sur les dirigeant.es d’entreprise.
                     Une logique collaborative, conviviale et profondément résiliente.
                 </p>
-                <div>
-                    <a class="btn btn--var-purple" href="pages/_afterboss.php#afterwork">AFTERWORK</a>
-                    <a class="btn btn--var-purple" href="pages/_afterboss.php#atelier">LES ATELIERS</a>
+                <div class="ctt_btn">
+                    <div class="btn btn--var-purple">
+                        <a class="link_color--var" href="pages/_afterboss.php#afterwork">AFTERWORK</a>
+                    </div>
+                    <div class="btn btn--var-purple">
+                        <a class="link_color--var" href="pages/_afterboss.php#atelier">LES ATELIERS</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -230,9 +257,14 @@ require_once 'includes/_fonctions.php';
                     et/ou qui sont en pleine réflexion et décision de le devenir ! Deux parcours initiaux pour comprendre, poser et envisager les décisions à prendre pour mettre son business en situation de réussite potentielle.
                 </p>
 
-                <div>
-                    <a class="btn btn--var-orange" href="pages/_entrepreneur2demain.php#cursus3j">CURSUS 5 JOURS</a>
-                    <a class="btn btn--var-orange" href="pages/_entrepreneur2demain.php#cursus5j">CURSUS 3 JOURS</a>
+                <div class="ctt_btn">
+                    <div class="btn btn--var-orange">
+                        <a class="link_color--var" href="pages/_entrepreneur2demain.php#cursus3j">CURSUS 5 JOURS</a>
+                    </div>
+                    <div class="btn btn--var-orange">
+
+                        <a class="link_color--var" href="pages/_entrepreneur2demain.php#cursus5j">CURSUS 3 JOURS</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -290,8 +322,8 @@ require_once 'includes/_fonctions.php';
                     problèmes, mais de changer notre regard sur eux ?
                 </p>
 
-                <div>
-                    <a class="btn btn--var-blue" href="pages/_mouvement-outside.php#outside">DEVENIR ACTEUR DE SA RÉUSSITE</a>
+                <div class="btn btn--var-blue">
+                    <a class="link_color--var" href="pages/_mouvement-outside.php#outside">DEVENIR ACTEUR DE SA RÉUSSITE</a>
                 </div>
             </div>
         </section>
@@ -312,7 +344,7 @@ require_once 'includes/_fonctions.php';
                     <figure>
                     <picture>
                         <source media="(min-width: 960px)" srcset="../assets/img/img-tlt-les-rencontres-XL.png">
-                        <img src="../assets/img/img-tlt-les-rencontres-S.png" alt="">
+                        <img class="img-b2btv--item" src="../assets/img/img-tlt-les-rencontres-S.png" alt="">
                     </picture>
                     <figcaption></figcaption>
                     </figure>    

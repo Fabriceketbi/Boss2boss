@@ -3,10 +3,12 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
-
-// $dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PWD']);
-
 // CONNECTION 
+
+// new PDO crée une instance de la classe PDO pour établir une connexion à la base de données. 
+//infos récupérées depuis le fichier .env 
+//infos sensiplbles non présents dans le code
+
 try {
     $dbCo = new PDO(
         'mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'] . ';charset=utf8',

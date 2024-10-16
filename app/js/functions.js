@@ -5,6 +5,8 @@
  * @param {*element} navElement 
  */
 function openCloseMenu (burgerButton, burgerMenu) {
+    console.log(burgerButton, burgerMenu);
+    
     burgerButton.addEventListener('click', function() {
         burgerMenu.classList.toggle('hidden');
     })

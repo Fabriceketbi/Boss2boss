@@ -5,9 +5,8 @@ require_once 'includes/_config.php';
 require_once 'includes/_fonctions.php';
 require_once 'includes/_database.php';
 
-preventCSRF();
 
-// var_dump($_SESSION['errorsList']);
+preventCSRF();
 
 if (!empty($_REQUEST)) {
 
@@ -170,8 +169,10 @@ if (!empty($_REQUEST)) {
             connectedMyAccount($dbCo);
         }
     } elseif ($_REQUEST['action'] === 'deconnection' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        session_destroy();
+        // var_dump($_REQUEST);
+        // session_destroy();
+        unset($_SESSION['admin_name']);
+        unset($_SESSION['id_admin']);
         redirectTo('_connexion.php');
     }
 

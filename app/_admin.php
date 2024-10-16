@@ -126,6 +126,7 @@ if (!isset($_SESSION["id_admin"])) {
             <form action="../actions.php" method="post">
                 <input type="submit" value="Déconnexion" class="btn btn--var-deconnection">
                 <input type="hidden" name="action" value="deconnection">
+                <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
             </form>
         </div>
         <section class="section_form">

@@ -134,8 +134,5 @@ function runAutoShowCycle() {
     }, 20000)); // Affiche le quatrième onglet après 10 secondes
 }
 
-// function scrollToAnchor(id) {
-//     window.location.href = "/pages/_afterboss.php#" + id;
-// }
 
 

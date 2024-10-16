@@ -270,9 +270,6 @@ function getAllHosts($dbCo)
  */
 function checkInfosFormation(array $infos): bool
 {
-    // if (!isset($infos['name']) || strlen($infos['name']) === 0) {
-    //     addError('Le champ "nom" est requis.');
-    // }
 
     if (!isset($infos['name_host']) || !ctype_digit($infos['name_host'])) {
         addError('host');
@@ -467,7 +464,7 @@ function getAllFormAbLa($dbCo, $errors)
         $formation["date2_"] = traductDate($formation["date2_"]);
         $formation["date3_"] = traductDate($formation["date3_"]);
         echo '
-            <card class="card_formation">
+            <card id="formation-' . $formation["id_formation"] . '" class="card_formation">
             <div class="card_intro">
                 <h2 class="card_formation-ttl"> ' . $formation["name"] . '
                 </h2>
@@ -649,7 +646,7 @@ function getAllFormE2D5J($dbCo, $errors)
         $formation["date3_"] = traductDate($formation["date3_"]);
 
         echo '
-    <card id="cursus5j" class="card_formation--orange">
+    <card id="formation-' . $formation["id_formation"] . '" class="card_formation--orange">
     <div class="card_intro">
         <h2 class="card_formation-ttl--orange"> ' . $formation["name"] . '
         </h2>
@@ -775,7 +772,7 @@ function getAllFormE2D3J($dbCo, $errors)
         $formation["date3_"] = traductDate($formation["date3_"]);
 
         echo '
-    <card  id="formation-' . $formation["id_formation"] . '" class="card_formation--orange">
+    <card id="formation-' . $formation["id_formation"] . '" class="card_formation--orange">
     <div class="card_intro">
         <h2 class="card_formation-ttl--orange"> ' . $formation["name"] . '
         </h2>
@@ -1923,7 +1920,7 @@ function getVideos(PDO $dbCo)
 
         echo '
         <div class="content_ifram">
-        <iframe class="slider-item" width="560" height="400" src="' . $video['link'] . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe class="slider-item" src="' . $video['link'] . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         ';
     }

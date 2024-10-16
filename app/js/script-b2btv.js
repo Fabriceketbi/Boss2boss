@@ -7,44 +7,44 @@ const forms = document.querySelectorAll("[data-form]");
 const btnPopUp = document.querySelectorAll("[data-btn]");
 const scrollContainer = document.querySelector('.slider-items');
 
+Tools.openCloseMenu(burgerButton, burgerMenu);
 
+// scrollContainer.addEventListener('wheel', function(e) {
+//     e.preventDefault();
+//     const scrollAmount = e.deltaY * 2;  // Multipliez pour un effet plus visible
+//     scrollContainer.scrollLeft += scrollAmount; 
+// });
 
-scrollContainer.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    const scrollAmount = e.deltaY * 2;  // Multipliez pour un effet plus visible
-    scrollContainer.scrollLeft += scrollAmount; 
-});
+// const slider = document.querySelector('.slider-items');
+//         let isDown = false;
+//         let startX;
+//         let scrollLeft;
 
-const slider = document.querySelector('.slider-items');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        // Au clic, capture la position initiale de la souris et du scroll
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            slider.classList.add('active');
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-        });
+//         // Au clic, capture la position initiale de la souris et du scroll
+//         slider.addEventListener('mousedown', (e) => {
+//             isDown = true;
+//             slider.classList.add('active');
+//             startX = e.pageX - slider.offsetLeft;
+//             scrollLeft = slider.scrollLeft;
+//         });
 
         // Quand le clic est relâché ou la souris quitte le slider
-        slider.addEventListener('mouseleave', () => {
-            isDown = false;
-        });
+        // slider.addEventListener('mouseleave', () => {
+        //     isDown = false;
+        // });
 
-        slider.addEventListener('mouseup', () => {
-            isDown = false;
-        });
+        // slider.addEventListener('mouseup', () => {
+        //     isDown = false;
+        // });
 
         // Suivre le déplacement de la souris pour ajuster le scroll
-        slider.addEventListener('mousemove', (e) => {
-            if(!isDown) return;  // Ne scrolle que si le clic est maintenu
-            e.preventDefault();  // Empêche les comportements par défaut
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 5; // Ajuster le facteur pour la vitesse
-            slider.scrollLeft = scrollLeft - walk; // Appliquer le scroll en fonction du déplacement
-        });
+        // slider.addEventListener('mousemove', (e) => {
+            // if(!isDown) return;  // Ne scrolle que si le clic est maintenu
+            // e.preventDefault();  // Empêche les comportements par défaut
+            // const x = e.pageX - slider.offsetLeft;
+            // const walk = (x - startX) * 5; // Ajuster le facteur pour la vitesse
+            // slider.scrollLeft = scrollLeft - walk; // Appliquer le scroll en fonction du déplacement
+        // });
 
 
 btnPopUp.forEach((btn) => {
@@ -63,7 +63,7 @@ btnPopUp.forEach((btn) => {
 
 
 
-Tools.openCloseMenu(burgerButton, burgerMenu);
+
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Page chargée");

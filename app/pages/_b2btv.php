@@ -59,14 +59,14 @@ generateToken();
         <div class="header_content-b2btv">
             <div class="header_content-img">
                 
-                <img class="" src="../assets/img/b2btv-img-header-S.png" alt="">
+                <img class="header_img-b2btv" src="../assets/img/b2btv-img-header-S.png" alt="">
               
                 <div class="header_content-banner">
                     
                 <figure>
                 <picture>
                     <source media="(min-width: 960px)" srcset="../assets/img/img-tlt-les-rencontres-XL.png">
-                    <img src="../assets/img/img-tlt-les-rencontres-S.png" alt="">
+                    <img class="img_les-rencontres" src="../assets/img/img-tlt-les-rencontres-S.png" alt="">
                 </picture>
                 <figcaption></figcaption>
                 </figure>    
@@ -83,18 +83,6 @@ generateToken();
     <main>
         
         <section class="les-rencontres">
-            <!-- <div class="content-presentation">
-                <figure class="presentation-fig">
-                    <picture>
-                        <source media="(min-width: 960px)" srcset="../assets/img/img-tlt-les-rencontres-XL-var.png">
-                        <img src="../assets/img/img-tlt-les-rencontres-S-var.png" alt="">
-                    </picture>
-                    <figcaption></figcaption>
-                </figure>
-                <p class="presentation-txt">
-                    Au travers d’une ballade filmée dans l’entreprise, au travers de questions portées sur “l’intime” plus que l’organisationnel, portrait de femmes entrepreneures, leurs forces et faiblesses, la place du regard des autres mais plus encore, l’équilibre entre la vie pro et la vie perso, les enfants...
-                </p>
-            </div> -->
 
             <div class="content-videos">
       
