@@ -234,6 +234,24 @@ if (!isset($_SESSION["id_admin"])) {
                     <input type="text" name="reducePrice" class="input" id="inputReducePrice" aria-describedby="">
 
 
+                    <label for="">visibilité *</label>
+
+                    <select class="input" name="status" id="">
+                        <option value="">État de la formation</option>
+                        <option value=1>cachée</option>
+                        <option value=2>visible</option>
+                    </select>
+
+                    <?
+                    if (isset($_SESSION['errorsList']) && in_array('status_missing', $_SESSION['errorsList'])) {
+                        echo
+                        displayErrorMsg('status_missing', $_SESSION['errorsList'], $errors);
+                        unset($_SESSION['errorsList']);
+                    }
+
+                    ?>
+
+
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="<?php echo htmlspecialchars($csrfToken); ?>">
@@ -324,15 +342,6 @@ if (!isset($_SESSION["id_admin"])) {
                     <label for="inputLink" class="">Lien de la vidéo</label>
                     <input type="text" name="link" class="input" id="inputLink" aria-describedby="">
 
-                    <?
-                    // if (isset($_SESSION['errorsList']) && in_array('name_subCategory', $_SESSION['errorsList'])) {
-                    //     echo
-                    //     displayErrorMsg('name_subCategory', $_SESSION['errorsList'], $errors);
-                    //     unset($_SESSION['errorsList']);
-                    // }
-
-                    ?>
-
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
@@ -340,10 +349,6 @@ if (!isset($_SESSION["id_admin"])) {
 
                     </div>
                 </form>
-
-
-
-
 
                 <div class="separator--form"></div>
 

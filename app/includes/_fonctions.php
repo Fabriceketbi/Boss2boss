@@ -295,6 +295,10 @@ function checkInfosFormation(array $infos): bool
         addError('nb_participants');
     }
 
+    if (!isset($infos['status'])) {
+        addError('status_missing');
+    }
+
     return empty($_SESSION['errorsList']);
 }
 
@@ -332,7 +336,7 @@ function checkInfosMail(array $infos): bool
 function getFormAbAw($dbCo, $errors)
 {
 
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 1  AND date1_ > "1970-01-01" ORDER BY date1_');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 1 AND id_sub_category = 1  AND date1_ > "1970-01-01" AND id_status = 2 ORDER BY date1_');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -370,7 +374,7 @@ function getFormAbAw($dbCo, $errors)
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
             </div>
-            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price") . '>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === null) ? 'hidden' : "card_price") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
@@ -505,7 +509,7 @@ function getAllFormAbLa($dbCo, $errors)
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
             </div>
-            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price") . '>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === null) ? 'hidden' : "card_price") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
@@ -693,7 +697,7 @@ function getAllFormE2D5J($dbCo, $errors)
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--orange") . '>
                 <p>Tarif : ' . $formation["price"] . '€ la session </p>
             </div>
-            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--orange") . '>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === null) ? 'hidden' : "card_price--orange") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
@@ -820,7 +824,7 @@ function getAllFormE2D3J($dbCo, $errors)
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--orange") . '>
                 <p>Tarif : ' . $formation["price"] . '€ la session </p>
             </div>
-            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--orange") . '>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === null) ? 'hidden' : "card_price--orange") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
@@ -982,7 +986,7 @@ function getAllFormLppF($dbCo, $errors)
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--red") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
             </div>
-            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--red content_price") . '>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === null) ? 'hidden' : "card_price--red content_price") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn--red">
@@ -1151,7 +1155,7 @@ function getAllFormMouvement($dbCo, $errors)
            <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--red-basic content_price") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
             </div>
-            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--red-basic content_price") . '>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === null) ? 'hidden' : "card_price--red-basic content_price") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             
@@ -1367,7 +1371,7 @@ function getAllFormOutside($dbCo, $errors)
 function getAllForm($dbCo)
 {
 
-    $query = $dbCo->query('SELECT id_formation,name ,name_host, subtitle, description, specification, date1_, date2_, date3_, time, localisation, id_sub_category, id_category, price, reduce_price, nb_participants FROM formation JOIN host USING (id_host)GROUP BY id_formation, id_sub_category
+    $query = $dbCo->query('SELECT id_formation,name ,name_host, subtitle, description, specification, date1_, date2_, date3_, time, localisation, id_sub_category, id_category, price, reduce_price, nb_participants, id_status FROM formation JOIN host USING (id_host) JOIN status USING (id_status) GROUP BY id_formation, id_sub_category
     ORDER BY id_sub_category');
     $query->execute();
 
@@ -1435,6 +1439,15 @@ function getAllForm($dbCo)
                     <p>Prix avec réduction: </p>
                     <p class="tag-' . $color . '">' . $formation["reduce_price"] . '€</p>
                 </div>
+
+
+                <div class="card_infos-time">
+                    <p>Statut: </p>
+                    <p class="tag-' . $color . '">' . ($formation["id_status"] === 1 ? 'formation cachée' : 'formation visible') . '</p>
+                </div>
+
+
+
                 <div class="card_content-btn">
                 <a href="_admin-edit.php?id=' . $formation["id_formation"] . '"><button class="btn btn--inscription-' . $color . '" type="input" name="action" value="edit-formation">modifier
                 </button></a>

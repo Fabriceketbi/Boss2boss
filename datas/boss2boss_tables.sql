@@ -53,3 +53,13 @@ CREATE TABLE formation(
    FOREIGN KEY(id_category) REFERENCES category(id_category),
    FOREIGN KEY(id_host) REFERENCES host(id_host)
 );
+
+CREATE TABLE status(
+   id_status INT AUTO_INCREMENT,
+   state_value BOOLEAN NOT NULL,
+   PRIMARY KEY(id_status)
+);
+
+ALTER TABLE formation
+ADD CONSTRAINT fk_status FOREIGN KEY (id_status) REFERENCES status(id_status);
+

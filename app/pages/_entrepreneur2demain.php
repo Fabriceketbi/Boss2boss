@@ -14,6 +14,7 @@ include '../includes/_database.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/img/fav-icon.png">
     <title>boss2boss</title>
 </head>
 <body>

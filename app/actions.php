@@ -5,7 +5,6 @@ require_once 'includes/_config.php';
 require_once 'includes/_fonctions.php';
 require_once 'includes/_database.php';
 
-
 preventCSRF();
 
 if (!empty($_REQUEST)) {
@@ -75,8 +74,9 @@ if (!empty($_REQUEST)) {
         if (!checkInfosFormation($_REQUEST)) {  
             redirectTo('_admin.php');
         } else {
-            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `specification`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `reduce_price`, `nb_participants`) VALUES (:name, :subtitle, :description, :specification, :date1, :date2, :date3, :time,
-           :localisation, :id_sub_category, :id_category, :id_host, :price, :reduce_price, :nb_participants);");
+
+            $insert = $dbCo->prepare("INSERT INTO `formation`(`name`, `subtitle`, `description`, `specification`, `date1_`, `date2_`, `date3_`, `time`, `localisation`, `id_sub_category`, `id_category`, `id_host`, `price`, `reduce_price`, `nb_participants`, `id_status`) VALUES (:name, :subtitle, :description, :specification, :date1, :date2, :date3, :time,
+           :localisation, :id_sub_category, :id_category, :id_host, :price, :reduce_price, :nb_participants, :id_status);");
 
             $isInsertOk = $insert->execute([
                 'name' => htmlspecialchars($_REQUEST['name']),
@@ -94,6 +94,7 @@ if (!empty($_REQUEST)) {
                 'price' => intval($_REQUEST['price']),
                 'reduce_price' => intval($_REQUEST['reducePrice']),
                 'nb_participants' => intval($_REQUEST['participants']),
+                'id_status' => intval($_REQUEST['status']),
             ]);
 
 

@@ -53,3 +53,8 @@ INSERT INTO video (link) VALUES
 ('https://www.youtube.com/embed/m7qlSGhSLq8?si=xBfh_jqNoy4f6sp2'),
 ('https://www.youtube.com/embed/HapqtBbO_Rg?si=F04Q7tk8v1i9MuV7'),
 ('https://www.youtube.com/embed/GNMCwuzduO8?controls=1&amp;rel=0&amp;playsinline=0&amp;modestbranding=1&amp;autoplay=0&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fboss2boss.club&amp;widgetid=1');
+
+
+INSERT INTO `status`(`state_value`) VALUES ('0');
+
+INSERT INTO `status`(`state_value`) VALUES ('1');

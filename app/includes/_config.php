@@ -48,6 +48,7 @@ $errors = [
     'create_video-ko' => 'Echec lors de l\'ajout de la video',
     'insert_video-ko' => 'erreur enregistrement vidéo',
     'supp-video_ko' => 'Erreur lors de la suppression de la video',
+    'status_missing' => 'Sélectionnez un statut',
 ];
 
 $messages = [

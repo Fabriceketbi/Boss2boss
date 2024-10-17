@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="../assets/img/fav-icon.png">
     <title>boss2boss</title>
 </head>
 
@@ -18,7 +19,7 @@
                     <li><a class="btn btn--header-white--orange" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                     <li><a class="btn btn--header-white--red" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                     <li><a class="btn btn--header-white--red-basic" href="../pages/_mouvement-outside.php">mouvement</a></li>
-                    <li><a class="btn btn--header-white--blue" href="../pages/_mouvement-outside.php">outside the box</a></li>
+                    <li><a class="btn btn--header-white--blue" href="../pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
                     <li><a class="btn btn--header-white--green" href="../pages/_b2btv.php">B2B TV</a></li>
                 </ul>
 
@@ -39,7 +40,7 @@
                 <li><a class="menu_berger-itm" href="../pages/_entrepreneur2demain.php">entrepreneur2demain</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_lespepes.php">les pépés flingueurs</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_mouvement-outside.php">mouvement</a></li>
-                <li><a class="menu_berger-itm" href="../pages/_mouvement-outside.php">outside the box</a></li>
+                <li><a class="menu_berger-itm" href="../pages/_mouvement-outside.php#outsideTheBox">outside the box</a></li>
                 <li><a class="menu_berger-itm" href="../pages/_b2btv.php">B2B TV</a></li>
                 <li><a class="menu_berger-itm" type="mail" href="mailto:fpineda@fpineda.co">Contact</a></li>
             </ul>

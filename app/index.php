@@ -12,6 +12,7 @@ require_once 'includes/_fonctions.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/assets/img/fav-icon.png">
     <title>boss2boss</title>
 </head>
 
@@ -68,7 +69,7 @@ require_once 'includes/_fonctions.php';
         <section class="header_banner">
             <div class="header_banner--content">
                 <img class="logo_header_banner" src="assets/img/boss2boss_white.png" alt="">
-                <h3 class="header_banner--tlt">Avec 3 concepts, il y en a forcement un pour vous !</h3>
+                <h3 class="header_banner--tlt">Concevoir la formation autrement !</h3>
 
                 <div class="header_banner-bottom_content">
                     <div class="content_bublle">
