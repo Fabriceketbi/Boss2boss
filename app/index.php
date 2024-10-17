@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 unset($_SESSION['errorsList']);
 require_once 'includes/_fonctions.php';
 

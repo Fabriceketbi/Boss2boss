@@ -130,7 +130,7 @@ if (!empty($_REQUEST)) {
 
         }else{
 
-        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, price = :price, reduce_price = :reduce_price, localisation = :localisation WHERE id_formation =:id");
+        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host,nb_participants = :nb_participants, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, price = :price, reduce_price = :reduce_price, localisation = :localisation WHERE id_formation =:id");
 
         $queryValues = [
             'name' => htmlspecialchars($_REQUEST['name']),
@@ -140,6 +140,7 @@ if (!empty($_REQUEST)) {
             'id_sub_category' => intval($_REQUEST['subCategory']),
             'id_category' => intval($_REQUEST['category']),
             'id_host' => intval($_REQUEST['name_host']),
+            'nb_participants' => intval($_REQUEST['participants']),
             'date1' => date('Y-m-d', strtotime($_REQUEST['date1'])),
             'date2' => date('Y-m-d', strtotime($_REQUEST['date2'])),
             'date3' => date('Y-m-d', strtotime($_REQUEST['date3'])),
@@ -219,16 +220,29 @@ if (!empty($_REQUEST)) {
             if ($_REQUEST['id_category'] === "3") {
                 redirectTo('pages/_lespepes.php');
             }
+            if ($_REQUEST['id_category'] === "4") {
+                redirectTo('mouvement-outside.php');
+            }
+            if ($_REQUEST['id_category'] === "5") {
+                redirectTo('mouvement-outside.php');
+            }
         }
         else {
 
         $to = "inscription@boss2boss.club ";
         $subject = "inscription";
-        $message =  htmlspecialchars($_REQUEST['lastname']) . " " . htmlspecialchars($_REQUEST['firstname']) . " souhaite s'inscrire pour la formation " . htmlspecialchars($_REQUEST['formationName']);
-        $headers = htmlspecialchars($_REQUEST['email']);
+        $message = "<p>" . htmlspecialchars($_REQUEST['lastname'], ENT_QUOTES, 'UTF-8') . " " 
+           . htmlspecialchars($_REQUEST['firstname'], ENT_QUOTES, 'UTF-8') 
+           . " souhaite s'inscrire pour la formation " 
+           . htmlspecialchars($_REQUEST['formationName'], ENT_QUOTES, 'UTF-8') . "</p>
+           <p>Voici son email :" . htmlspecialchars($_REQUEST['email'], ENT_QUOTES, 'UTF-8') . "</p>";
+
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <' . htmlspecialchars($_REQUEST['email'], ENT_QUOTES, 'UTF-8') . '>' . "\r\n";
 
         $_SESSION['id_form-select'] = $_REQUEST['id_formation'];
-        // mail($to, $subject, $message, $headers);
+        mail($to, $subject, $message, $headers);
         addMessage('inscription_ok');  
         if ($_REQUEST['id_category'] === "1") {
             redirectTo('pages/_afterboss.php');

@@ -354,20 +354,29 @@ function getFormAbAw($dbCo, $errors)
                 <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
             </div>
            <div class="content_next_session">
-                    <div class="infos_next_session--var">
+                    <div class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'infos_next_session--var') . '">
                         <ul class="infos_next_session--lst-purple">
                             <l1>Le ' . $formation["date1_"] . '</l1>
-                            <l1>' . $formation["time"] . ' à ' . $formation["localisation"] . '</l1>
+                            <l1>' . $formation["time"] . '</l1>
+                            <l1 class=' . ($formation["localisation"] === '' ? 'hidden' : '') . '>à ' . $formation["localisation"] . '</l1>
                         </ul>
                     </div>
             </div>
-            <div class= "card_price">
+            <div class= "' . ($formation["nb_participants"] === 0 ? 'hidden' : "card_participants") . '">
+                <p>Nombre maximum de participants</p>
+                <p>' . $formation["nb_participants"] . '</p>
+
+            </div>
+            <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
+            </div>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price") . '>
+                <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-purple">Je m\'incris</button>
             </div>
-            <!-- <div class="separator--formation"></div> -->
+
         </card>
         <section data-form="' . $formation["id_formation"] . '" class="section_pop-up hidden">
             <div class="pop-up">
@@ -484,17 +493,20 @@ function getAllFormAbLa($dbCo, $errors)
                         <ul class="infos_next_session--lst-purple">
                             <l1>Le ' . $formation["date1_"] . '</l1>
                             <l1>' . $formation["time"] . '</l1>
-                            <l1>à ' . $formation["localisation"] . '</l1>
+                            <l1 class=' . ($formation["localisation"] === '' ? 'hidden' : '') . '>à ' . $formation["localisation"] . '</l1>
                         </ul>
                     </div>
             </div>
-            <div class= "card_participants">
+            <div class= "' . ($formation["nb_participants"] === 0 ? 'hidden' : "card_participants") . '">
                 <p>Nombre maximum de participants</p>
                 <p>' . $formation["nb_participants"] . '</p>
 
             </div>
-            <div class= "card_price">
-                <p>Tarif : ' . $formation["price"] . '€ la session </p>
+            <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price") . '>
+                <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
+            </div>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price") . '>
+                <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-purple">Je m\'incris</button>
@@ -674,8 +686,15 @@ function getAllFormE2D5J($dbCo, $errors)
                         </ul>
                     </div>
             </div>
+            <div class= "' . ($formation["nb_participants"] === 0 ? 'hidden' : "card_participants--orange") . '">
+                <p>Nombre maximum de participants</p>
+                <p>' . $formation["nb_participants"] . '</p>
+            </div>
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--orange") . '>
                 <p>Tarif : ' . $formation["price"] . '€ la session </p>
+            </div>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--orange") . '>
+                <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-orange">Je m\'incris</button>
@@ -794,8 +813,15 @@ function getAllFormE2D3J($dbCo, $errors)
                         </ul>
                     </div>
             </div>
+            <div class= "' . ($formation["nb_participants"] === 0 ? 'hidden' : "card_participants--orange") . '">
+                <p>Nombre maximum de participants</p>
+                <p>' . $formation["nb_participants"] . '</p>
+            </div>
             <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--orange") . '>
                 <p>Tarif : ' . $formation["price"] . '€ la session </p>
+            </div>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--orange") . '>
+                <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-orange">Je m\'incris</button>
@@ -941,15 +967,23 @@ function getAllFormLppF($dbCo, $errors)
                 <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
             </div>
            <div class="content_next_session">
-                    <div class="infos_next_session--var--red">
+                <div class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'infos_next_session--var--red') . '">
                         <ul class="infos_next_session--lst-red">
                             <l1>Le ' . $formation["date1_"] . '</l1>
-                            <l1>' . $formation["time"] . ' à ' . $formation["localisation"] . '</l1>
+                            <l1>' . $formation["time"] . '</l1>
+                            <l1 class=' . ($formation["localisation"] === '' ? 'hidden' : '') . '>à ' . $formation["localisation"] . '</l1>
                         </ul>
-                    </div>
+                </div>                  
             </div>
-            <div class= "card_price--red">
+            <div class= "' . ($formation["nb_participants"] === 0 ? 'hidden' : "card_participants--red") . '">
+                <p>Nombre maximum de participants</p>
+                <p>' . $formation["nb_participants"] . '</p>
+            </div>
+            <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--red") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
+            </div>
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--red content_price") . '>
+                <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
             <div class="card_content-btn--red">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-red">Je m\'incris</button>
@@ -1101,20 +1135,26 @@ function getAllFormMouvement($dbCo, $errors)
                 </p>
                 <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
             </div>
-           <div class="content_next_session">
-                    <div class="infos_next_session--var--red-basic">
+            <div class="content_next_session">
+           <div class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'infos_next_session--var--red-basic') . '">
                         <ul class="infos_next_session--lst-red-basic">
                             <l1>Le ' . $formation["date1_"] . '</l1>
-                            <l1>' . $formation["time"] . ' à ' . $formation["localisation"] . '</l1>
+                            <l1>' . $formation["time"] . '</l1>
+                            <l1 class=' . ($formation["localisation"] === '' ? 'hidden' : '') . '>à ' . $formation["localisation"] . '</l1>
                         </ul>
-                    </div>
+                    </div>                  
             </div>
-            <div class= "card_price--red-basic content_price">
+            <div class= "' . ($formation["nb_participants"] === 0 ? 'hidden' : "card_participants--red-basic") . '">
+                <p>Nombre maximum de participants</p>
+                <p>' . $formation["nb_participants"] . '</p>
+            </div>
+           <div class=' . ($formation["price"] === 0 ? 'hidden' : "card_price--red-basic content_price") . '>
                 <p>Tarif : ' . $formation["price"] . '€ / session / personne</p>
             </div>
-            <div class= "card_price--red-basic content_price">
+            <div class=' . (($formation["reduce_price"] === 0 || $formation["reduce_price"] === '') ? 'hidden' : "card_price--red-basic content_price") . '>
                 <p>Tarif : ' . $formation["reduce_price"] . '€ / session / personne si partenaire</p>
             </div>
+            
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-red-basic">Je m\'incris</button>
             </div>
@@ -1228,12 +1268,13 @@ function getAllFormOutside($dbCo, $errors)
                 <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
             </div>
            <div class="content_next_session">
-                    <div class="infos_next_session--var--blue">
+                    <div class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'infos_next_session--var--blue') . '">
                         <ul class="infos_next_session--lst-blue">
                             <l1>Le ' . $formation["date1_"] . '</l1>
-                            <l1>' . $formation["time"] . ' à ' . $formation["localisation"] . '</l1>
+                            <l1>' . $formation["time"] . '</l1>
+                            <l1 class=' . ($formation["localisation"] === '' ? 'hidden' : '') . '>à ' . $formation["localisation"] . '</l1>
                         </ul>
-                    </div>
+                </div>
             </div>
             <div class= "card_price--blue content_price">
                 <p>Tarif: Gratuit réservé aux étudiants</p>
@@ -1498,7 +1539,8 @@ function editFormation($dbCo, $id, $errors)
 
 
                     <label for="inputParticipant" class="">Nombre maximum de participant</label>
-                    <input type="text" name="participants" class="input" id="inputParticipant" aria-describedby="">';
+                    <input type="text" name="participants" class="input"
+                    value="' . $formation["nb_participants"] . '" id="inputParticipant" aria-describedby="">';
 
         if (isset($_SESSION['errorsList']) && in_array('edit-participants_ko', $_SESSION['errorsList'])) {
             echo
@@ -1585,7 +1627,7 @@ function checkConnexionInfo(array $connexionData): bool
         addError('connexion_password');
     }
 
-    if (strlen($connexionData['password']) > 10) {
+    if (strlen($connexionData['password']) > 50) {
         addError('connexion_password_size');
     }
 
