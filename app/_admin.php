@@ -286,7 +286,7 @@ if (!isset($_SESSION["id_admin"])) {
 
 
 
-                <h2>Formulaire d'ajout de catégorie</h2>
+                <!-- <h2>Formulaire d'ajout de catégorie</h2>
 
                 <form id="" class="form_formation" action="../actions.php" method="post">
 
@@ -307,10 +307,10 @@ if (!isset($_SESSION["id_admin"])) {
                         <input id="token" type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         <input type="hidden" name="action" value="add-category">
                     </div>
-                </form>
+                </form> -->
 
 
-                <h2>Formulaire d'ajout de sous-catégorie</h2>
+                <!-- <h2>Formulaire d'ajout de sous-catégorie</h2>
 
                 <form id="" class="form_formation" action="../actions.php" method="post">
 
@@ -332,7 +332,7 @@ if (!isset($_SESSION["id_admin"])) {
                         <input type="hidden" name="action" value="add-sub-category">
 
                     </div>
-                </form>
+                </form> -->
 
                 <div class="separator--form"></div>
 

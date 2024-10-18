@@ -468,7 +468,7 @@ function getFormAbAw($dbCo, $errors)
  */
 function getAllFormAbLa($dbCo, $errors)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 1 AND id_sub_category = 3  AND date1_ > "1970-01-01" ORDER BY date1_');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 1 AND id_sub_category = 3  AND date1_ > "1970-01-01" AND id_status = 2 ORDER BY date1_');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -604,7 +604,7 @@ function getAllFormAbLa($dbCo, $errors)
  */
 function getLastFormAb($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 1 ORDER BY id_formation DESC LIMIT 1');
+    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) JOIN status USING (id_status) WHERE id_category = 1 AND id_status = 2 ORDER BY id_formation DESC LIMIT 1');
     $query->execute();
     $formation = $query->fetch();
 
@@ -652,7 +652,7 @@ function getLastFormAb($dbCo)
  */
 function getAllFormE2D5J($dbCo, $errors)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 4 ORDER BY id_formation DESC');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 2 AND id_sub_category = 4 AND id_status = 2 ORDER BY id_formation DESC');
 
     $query->execute();
     while ($formation = $query->fetch()) {
@@ -785,7 +785,7 @@ function getAllFormE2D5J($dbCo, $errors)
 
 function getAllFormE2D3J($dbCo, $errors)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 2 AND id_sub_category = 5 ORDER BY id_formation DESC LIMIT 3');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 2 AND id_sub_category = 5 AND id_status = 2 ORDER BY id_formation DESC LIMIT 3');
 
     $query->execute();
     while ($formation = $query->fetch()) {
@@ -911,7 +911,7 @@ function getAllFormE2D3J($dbCo, $errors)
 
 function getLastFormE2D($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 2 ORDER BY id_formation DESC LIMIT 1');
+    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) JOIN status USING (id_status) WHERE id_category = 2 AND id_status = 2 ORDER BY id_formation DESC LIMIT 1');
     $query->execute();
     $formation = $query->fetch();
 
@@ -948,7 +948,7 @@ function getLastFormE2D($dbCo)
 
 function getAllFormLppF($dbCo, $errors)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 3 AND id_sub_category = 6 AND date1_ > "1970-01-01" ORDER BY date1_');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 3 AND id_sub_category = 6 AND date1_ > "1970-01-01" AND id_status = 2 ORDER BY date1_');
 
     $query->execute();
     while ($formation = $query->fetch()) {
@@ -1075,7 +1075,7 @@ function getAllFormLppF($dbCo, $errors)
 
 function getLastFormLppF($dbCo)
 {
-    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) WHERE id_category = 3 ORDER BY id_formation DESC LIMIT 1');
+    $query = $dbCo->query('SELECT * FROM formation JOIN sub_category USING (id_sub_category) JOIN status USING (id_status) WHERE id_category = 3 AND id_status = 2 ORDER BY id_formation DESC LIMIT 1');
     $query->execute();
     $formation = $query->fetch();
 
@@ -1118,7 +1118,7 @@ function getLastFormLppF($dbCo)
 function getAllFormMouvement($dbCo, $errors)
 {
 
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 4 AND id_sub_category = 13 AND date1_ > "1970-01-01" ORDER BY date1_');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 4 AND id_sub_category = 13 AND date1_ > "1970-01-01" AND id_status = 2 ORDER BY date1_');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -1250,7 +1250,7 @@ function getAllFormMouvement($dbCo, $errors)
 function getAllFormOutside($dbCo, $errors)
 {
 
-    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) WHERE id_category = 5 AND id_sub_category = 13 AND date1_ > "1970-01-01" ORDER BY date1_');
+    $query = $dbCo->query('SELECT * FROM formation JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 5 AND id_sub_category = 13 AND date1_ > "1970-01-01" AND id_status = 2 ORDER BY date1_');
     $query->execute();
 
     while ($formation = $query->fetch()) {
@@ -1474,7 +1474,8 @@ function getAllForm($dbCo)
 
 function editFormation($dbCo, $id, $errors)
 {
-    $query = $dbCo->prepare('SELECT * FROM formation JOIN sub_category USING (id_sub_category) JOIN category USING (id_category) JOIN host USING (id_host) WHERE id_formation = :id ');
+    
+    $query = $dbCo->prepare('SELECT * FROM formation JOIN sub_category USING (id_sub_category) JOIN category USING (id_category) JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_formation = :id ');
 
     $isQueryOk = $query->execute([
         'id' => htmlspecialchars($id),
@@ -1581,6 +1582,22 @@ function editFormation($dbCo, $id, $errors)
                     <label for="inputReducePrice" class="">Prix avec réduction</label>
                     <input type="text" name="reducePrice" class="input" id="inputReducePrice" aria-describedby="">
 
+                    <label class="edit_label" for="">ancien statut: '. ($formation["id_status"] == 1 ? 'cachée' : 'visible') .'</label>
+
+                    <select class="input" name="status" id="">
+                        <option value="">État de la formation</option>
+                        <option value=1>cachée</option>
+                        <option value=2>visible</option>
+                    </select>';
+
+                    if (isset($_SESSION['errorsList']) && in_array('edit-status_ko', $_SESSION['errorsList'])) {
+
+                        echo
+                        displayErrorMsg('edit-status_ko', $_SESSION['errorsList'], $errors);
+                    }
+
+                    echo '
+
                     <div class="content_btn">
                         <input type="submit" value="Valider" class="btn btn--var-green">
                         <input id="token" type="hidden" name="token" value="' .  $_SESSION['token']  . '">
@@ -1614,6 +1631,10 @@ function checkUpdateFormation(array $infos): bool
 
     if ((!strlen($infos['subCategory']) === 0) || !ctype_digit($infos['subCategory'])) {
         addError('edit-subCategory_ko');
+    }
+
+    if ((!strlen($infos['status']) === 0) || !ctype_digit($infos['status'])) {
+        addError('edit-status_ko');
     }
 
     return (empty($_SESSION['errorsList']));
@@ -1763,7 +1784,7 @@ function formationIsComing(PDO $dbCo)
 function getFormAwByDate(PDO $dbCo)
 {
 
-    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 1 ORDER BY date1_ LIMIT 1');
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 1 AND id_status = 2 ORDER BY date1_ LIMIT 1');
 
     $query->execute();
 
@@ -1802,7 +1823,7 @@ function getFormAwByDate(PDO $dbCo)
 function getCursusByDate(PDO $dbCo)
 {
 
-    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 2 AND date1_ > "1970-01-01" ORDER BY date1_ LIMIT 1');
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 2 AND date1_ > "1970-01-01" AND id_status = 2 ORDER BY date1_ LIMIT 1');
 
     $query->execute();
 
@@ -1843,7 +1864,7 @@ function getCursusByDate(PDO $dbCo)
 function getFormLesPepesByDate(PDO $dbCo)
 {
 
-    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 3 ORDER BY date1_ LIMIT 1');
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 3 AND id_status = 2 ORDER BY date1_ LIMIT 1');
 
     $query->execute();
 
@@ -1881,7 +1902,7 @@ function getFormLesPepesByDate(PDO $dbCo)
 function getFormMouvementByDate(PDO $dbCo)
 {
 
-    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 4 ORDER BY date1_ LIMIT 1');
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 4 AND id_status = 2 ORDER BY date1_ LIMIT 1');
 
     $query->execute();
 
@@ -1919,7 +1940,7 @@ function getFormMouvementByDate(PDO $dbCo)
 function getFormOutsideByDate(PDO $dbCo)
 {
 
-    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) WHERE id_category = 5 ORDER BY date1_ LIMIT 1');
+    $query = $dbCo->query('SELECT *, name_subcat, name_category FROM `formation` JOIN category USING (id_category) JOIN sub_category USING (id_sub_category) JOIN host USING (id_host) JOIN status USING (id_status) WHERE id_category = 5 AND id_status = 2 ORDER BY date1_ LIMIT 1');
 
     $query->execute();
 

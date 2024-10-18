@@ -131,7 +131,7 @@ if (!empty($_REQUEST)) {
 
         }else{
 
-        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host,nb_participants = :nb_participants, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, price = :price, reduce_price = :reduce_price, localisation = :localisation WHERE id_formation =:id");
+        $query = $dbCo->prepare("UPDATE formation SET name = :name, subtitle = :subtitle, description = :description, specification = :specification, id_sub_category = :id_sub_category, id_category  = :id_category, id_host = :id_host,nb_participants = :nb_participants, date1_ = :date1, date2_ = :date2, date3_ = :date3, time = :time, price = :price, reduce_price = :reduce_price, localisation = :localisation, id_status = :id_status WHERE id_formation =:id");
 
         $queryValues = [
             'name' => htmlspecialchars($_REQUEST['name']),
@@ -150,6 +150,7 @@ if (!empty($_REQUEST)) {
             'reduce_price' => intval($_REQUEST['reducePrice']),
             'localisation' => htmlspecialchars($_REQUEST['localisation']),
             'id' => intval($_REQUEST['id']),
+            'id_status' => intval($_REQUEST['status']),
         ];
 
         $queryIsOk = $query->execute($queryValues);

@@ -5,6 +5,7 @@
 
     session_start();
     generateToken();
+    unset($_SESSION['errorsList']);
     
 ?>
 

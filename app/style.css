@@ -164,6 +164,7 @@ button {
 }
 
 .btn--var-blue {
+    text-align: center;
     background-color: var(--blue);
     color: white;
     padding:  0.625rem;
@@ -2140,7 +2141,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     gap: 0.875rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
     border: solid 3px var(--purple);
 }
@@ -2151,7 +2152,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     gap: 0.875rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
     border: solid 3px var(--orange);
 }
@@ -2201,7 +2202,7 @@ button {
 
 .card_intro {
     text-align: center;
-    width: 19.25rem;
+    /* width: 19.25rem; */
     padding: 0 1.25rem;
 }
 
@@ -2397,7 +2398,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     gap: 0.875rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
     border: solid 3px var(--red);
 }
@@ -2457,7 +2458,9 @@ button {
 }
 
 .perso_img {
-    height: 11.125rem;
+    object-fit: contain;
+    max-width: 12rem;
+    width: 100%;
 }
 
 @media screen and (min-width: 960px) {
@@ -2573,7 +2576,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     gap: 0.875rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
     border: solid 3px var(--red-basic);
 }
@@ -2659,7 +2662,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     gap: 0.875rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
     border: solid 3px var(--blue);
 }

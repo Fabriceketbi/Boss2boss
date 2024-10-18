@@ -49,6 +49,7 @@ $errors = [
     'insert_video-ko' => 'erreur enregistrement vidéo',
     'supp-video_ko' => 'Erreur lors de la suppression de la video',
     'status_missing' => 'Sélectionnez un statut',
+    'edit-status_ko' => 'Statut non renseigné',
 ];
 
 $messages = [

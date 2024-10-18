@@ -125,8 +125,8 @@ generateToken();
                     OUTSIDE THE BOX place l’humain au centre d’une expérience unique. Grâce à des conférences scénarisées et immersives, nous abordons des thématiques sociétales percutantes et profondément actuelles : pression sociale, peur de l’avenir après les études, et bien d’autres. L’objectif ? Créer un échange riche, authentique, et sans filtre. Il ne s’agit pas de fournir des réponses toutes faites, mais de remettre en question les normes, d’ouvrir de nouvelles perspectives, et d’armer chacun des participants pour tracer leur propre chemin et enfin mettre du sens aux doutes qui les habitent.
                 </p>
 
-                <div>
-                    <a class="btn btn--var-blue" href="_mouvement-outside.php#outside">DEVENIR ACTEUR DE SA RÉUSSITE</a>
+                <div class="btn btn--var-blue">
+                    <a class="link_color--var" href="_mouvement-outside.php#outside">DEVENIR ACTEUR DE SA RÉUSSITE</a>
                 </div>
             </div>
 
