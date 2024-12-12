@@ -1270,6 +1270,9 @@ function getAllFormOutside($dbCo, $errors)
                     ' . $formation["description"] . '
                 </p>
                 <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
+                <p>
+                    ' . $formation["specification"] . '
+                </p>
             </div>
            <div class="content_next_session">
                     <div class="' . ($formation["date1_"] === '01/01/1970' ? 'hidden' : 'infos_next_session--var--blue') . '">
