@@ -1281,7 +1281,7 @@ function getAllFormOutside($dbCo, $errors)
                 </div>
             </div>
             <div class= "card_price--blue content_price">
-                <p>Tarif: Gratuit réservé aux étudiants</p>
+                <p>Tarif: '.($formation["price"] === 0 ? 'Gratuit réservé aux étudiants' : ''.$formation["price"].' €').'</p>
             </div>
             <div class="card_content-btn">
                 <button data-btn=' . $formation["id_formation"] . ' class="btn btn--inscription-blue">Je m\'incris</button>
