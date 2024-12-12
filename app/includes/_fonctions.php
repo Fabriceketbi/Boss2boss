@@ -1271,7 +1271,7 @@ function getAllFormOutside($dbCo, $errors)
                 </p>
                 <p class="animator">Animé par : <span class="animator_name">' . $formation["name_host"] . '</span></p>
                 <p>
-                    ' . $formation["specification"] . '
+                    ' . nl2br(htmlspecialchars_decode($formation["specification"])) . '
                 </p>
             </div>
            <div class="content_next_session">
